@@ -20,7 +20,10 @@
         "vlucas/phpdotenv": "~1.0@dev",
         "nullref/yii2-useful": "dev-master",
         "nullref/yii2-core": "dev-master",
-        "nullref/yii2-admin": "dev-master"
+        "nullref/yii2-admin": "dev-master",
+        "moonlandsoft/yii2-phpexcel": "*",
+        "alexinator1/yii2-jta": "^0.2.4",
+        "voskobovich/yii2-many-many-behavior": "^3.0"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

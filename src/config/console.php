@@ -8,6 +8,7 @@ Yii::setAlias('@webroot', dirname(dirname(__DIR__)) . '/web');
 return [
     'id' => 'console-app',
     'basePath' => dirname(__DIR__),
+    'controllerNamespace' => 'app\console',
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'runtimePath' => dirname(dirname(__DIR__)) . '/runtime',
     'bootstrap' => ['log', 'core'],
