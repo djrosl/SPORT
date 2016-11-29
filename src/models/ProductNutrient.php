@@ -45,4 +45,8 @@ class ProductNutrient extends \yii\db\ActiveRecord
             'value' => 'Value',
         ];
     }
+
+    public function getParent(){
+        return $this->hasOne(TestNutrient::className(), ['id'=>'nutrient_id']);
+    }
 }

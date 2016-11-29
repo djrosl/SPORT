@@ -45,10 +45,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php
         foreach($model->nutrients as $nutrient) {
             echo "<tr>";
-            $value = \app\models\ProductNutrient::findOne(['product_id'=>$model->id,'nutrient_id'=>$nutrient->id])->value;
-            echo "<td>$nutrient->title_ru</td>";
+            $value = $nutrient->value;
+            echo "<td>{$nutrient->parent->title_ru}</td>";
             echo "<td>$value</td>";
-            echo "<td>$nutrient->unit</td>";
+            echo "<td>{$nutrient->parent->unit}</td>";
             echo "</tr>";
         }
     ?>

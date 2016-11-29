@@ -2,7 +2,6 @@
 
 namespace app\models;
 
-use voskobovich\manytomany\ManyToManyBehavior;
 use Yii;
 use yii\db\ActiveRecord;
 
@@ -28,20 +27,6 @@ class Product extends ActiveRecord
     public static function tableName()
     {
         return 'product';
-    }
-
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => ManyToManyBehavior::className(),
-                'relations' => [
-                    'nutrients' => ['nutrients',
-                        'viaTableValues'=>['value']
-                    ],
-                ],
-            ],
-        ];
     }
 
     /**
@@ -77,7 +62,11 @@ class Product extends ActiveRecord
     }
 
     public function getNutrients() {
+        return $this->hasMany(ProductNutrient::className(), ['product_id'=>'id']);
+    }
+
+    /*public function getNutrients() {
         return $this->hasMany(TestNutrient::className(), ['id'=>'nutrient_id'])
             ->viaTable('product_nutrient', ['product_id'=>'id']);
-    }
+    }*/
 }

@@ -42,7 +42,7 @@ class ParseController extends Controller {
 
         foreach($data as $product){
             $desc = str_replace(',', ', ', $product['Shrt_Desc']);
-            echo $desc;break;
+            //echo $desc;break;
             $model = Product::findOne(['title_en'=>$desc]);
             if(!$model){
                 $replaced = 'NEW';
