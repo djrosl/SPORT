@@ -41,29 +41,29 @@ class ParseController extends Controller {
         $data = \moonland\phpexcel\Excel::import(Yii::getAlias('@webroot').'/'.$file);
 
         foreach($data as $product){
-            $desc = str_replace(',', ', ', $product['Shrt_Desc']);
+            /*$desc = str_replace(',', ', ', $product['Shrt_Desc']);
             //echo $desc;break;
-            $model = Product::findOne(['title_en'=>$desc]);
-            if(!$model){
+            $model = Product::findOne(['title_en'=>$desc]);*/
+            /*if(!$model){*/
                 $replaced = 'NEW';
                 $model = new Product();
                 $model->title_en = $product['Shrt_Desc'];
                 $model->save();
-            } else {
+            /*} else {
                 $replaced = 'REPLACED';
-            }
+            }*/
             foreach($product as $key => $value){
                 $nutrient = TestNutrient::findOne(['usda'=>$key]);
                 if($nutrient){
-                    $pn = ProductNutrient::findOne(['product_id'=>$model->id, 'nutrient_id'=>$nutrient->id]);
-                    if(!$pn){
+                    /*$pn = ProductNutrient::findOne(['product_id'=>$model->id, 'nutrient_id'=>$nutrient->id]);
+                    if(!$pn){*/
                         $pn = new ProductNutrient();
                         $pn->product_id = $model->id;
                         $pn->nutrient_id = $nutrient->id;
-                    }
+                    /*}*/
                     $val = (float)str_replace(',', '.', $value);
-                    if($val || $pn->value){
-                        $pn->value = $val > $pn->value ? $val : $pn->value;
+                    if($val/* || $pn->value*/){
+                        $pn->value = $val /*> $pn->value ? $val : $pn->value*/;
                         $pn->save();
                     }
                 }
