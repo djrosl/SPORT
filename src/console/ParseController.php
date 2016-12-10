@@ -96,22 +96,24 @@ class ParseController extends Controller {
             //var_dump($product);die;
 
             $replaced = 'NEW';
-            $model = Product::findOne(['ndb_id'=>$product['ndb_id'], 'ndb_slug'=>'cnf']);
+            if(isset($model)){
+                if($model->ndb_id == $product['ndb_id']){
+                    $replaced = "SAME";
+                } else {
+                    $model = Product::findOne(['ndb_id'=>$product['ndb_id'], 'ndb_slug'=>'cnf']);
+                }
+            } else {
+                $model = Product::findOne(['ndb_id'=>$product['ndb_id'], 'ndb_slug'=>'cnf']);
+            }
             $nutrient = TestNutrient::findOne(['cnf'=>$product['slug']]);
             if($nutrient && $model){
-                $pn = ProductNutrient::findOne([
-                    'product_id'=>$model->id,
-                    'nutrient_id'=>$nutrient->id
-                ]);
-                if(!$pn){
+                $val = (float)$product['value'];
+                if($val){
                     $pn = new ProductNutrient();
                     $pn->product_id = $model->id;
                     $pn->nutrient_id = $nutrient->id;
-                    $val = (float)$product['value'];
-                    if($val){
-                        $pn->value = $val;
-                        $pn->save();
-                    }
+                    $pn->value = $val;
+                    $pn->save();
                 }
             }
             echo $replaced.' '.$model->title_en.' DONE! ID: '.$model->id." KEY $k of 200000\n";
