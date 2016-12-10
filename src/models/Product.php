@@ -65,8 +65,26 @@ class Product extends ActiveRecord
         return $this->hasMany(ProductNutrient::className(), ['product_id'=>'id']);
     }
 
-    /*public function getNutrients() {
-        return $this->hasMany(TestNutrient::className(), ['id'=>'nutrient_id'])
-            ->viaTable('product_nutrient', ['product_id'=>'id']);
-    }*/
+    public function getSame($attribute = '*'){
+        $words = explode(',', strtolower(str_replace(' ', '', $this->title_en)));
+        $rows = (new \yii\db\Query())
+            ->select(['*'])
+            ->from('product')
+            ->where("MATCH(title_en) AGAINST ('+".trim(implode(' +', $words))."' IN BOOLEAN MODE)")
+            ->all();
+
+        /*$arr = array_filter($rows, function($item) use ($words){
+            return count(explode(',', strtolower(str_replace(' ', '', $item['title_en'])))) == count($words);
+        });
+        var_dump($arr);die;*/
+
+        return $rows;
+    }
 }
+
+
+/*
+ *
+SELECT * FROM product
+WHERE MATCH(title_en) AGAINST ('+celery +raw' IN BOOLEAN MODE);
+ * */

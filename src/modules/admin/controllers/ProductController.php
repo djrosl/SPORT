@@ -44,6 +44,15 @@ class ProductController extends Controller
         ]);
     }
 
+    public function actionGroup($id){
+        $ids = Product::findOne(['id'=>$id])->getSame('id');
+        $models = Product::find()->where(['in','id',$ids])->all();
+
+        return $this->render('group', [
+            'models'=>$models
+        ]);
+    }
+
     /**
      * Displays a single Product model.
      * @param integer $id

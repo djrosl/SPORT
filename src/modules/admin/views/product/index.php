@@ -34,6 +34,13 @@ $this->params['breadcrumbs'][] = $this->title;
              'title_en',
              'title_ru',
              'ndb_slug',
+            [
+                'attribute' => 'group',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return Html::a('Группа: '.count($model->getSame()), ['product/group?id='.$model->id]);
+                },
+            ],
             // 'image',
             // 'description_short:ntext',
             // 'description_full:ntext',
