@@ -71,6 +71,7 @@ class Product extends ActiveRecord
             ->select(['*'])
             ->from('product')
             ->where("MATCH(title_en) AGAINST ('+".trim(implode(' +', $words))."' IN BOOLEAN MODE)")
+            ->andWhere(['!=', 'ngb_slug', $this->ndb_slug])
             ->all();
 
         /*$arr = array_filter($rows, function($item) use ($words){
