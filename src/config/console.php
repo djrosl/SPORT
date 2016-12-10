@@ -16,5 +16,19 @@ return [
     'params' => $params,
     'components' => [
         'db' => require(__DIR__ . '/db.php'),
-    ]
+    ],
+    'log' => [
+        'targets' => [
+            [
+                'class' => 'yii\log\FileTarget',
+                'levels' => ['error', 'warning'],
+            ],
+            [
+                'class' => 'yii\log\FileTarget',
+                'levels' => ['trace'],
+                'logVars' => [],
+                'logFile' => '@runtime/logs/commands.log'
+            ]
+        ],
+    ],
 ];

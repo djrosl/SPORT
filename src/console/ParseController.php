@@ -90,6 +90,7 @@ class ParseController extends Controller {
         $data = \moonland\phpexcel\Excel::import(Yii::getAlias('@webroot').'/'.$file, [
             'getOnlySheet' => 'NUTRIENT AMOUNT'
         ]);
+        ini_set('max_execution_time', -1);
 
         foreach($data as $k => $product){
 
