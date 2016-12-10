@@ -33,6 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
             //'slug',
              'title_en',
              'title_ru',
+             'ndb_slug',
             // 'image',
             // 'description_short:ntext',
             // 'description_full:ntext',

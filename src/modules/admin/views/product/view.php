@@ -34,6 +34,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'diet_type_id',
             'slug',*/
             'title_en',
+            'ndb_slug',
+            'ndb_id',
             /*'title_ru',
             'image',
             'description_short:ntext',
