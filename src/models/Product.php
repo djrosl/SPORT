@@ -78,6 +78,7 @@ class Product extends ActiveRecord
         });
         var_dump($arr);die;*/
 
+
         return $rows;
     }
 }

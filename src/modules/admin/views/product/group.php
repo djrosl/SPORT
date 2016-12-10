@@ -21,6 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <table class="table table-bordered">
                         <?php foreach($model->getNutrients()->orderBy('nutrient_id ASC')->all() as $nutrient) {
                             echo "<tr>";
+
                             $value = $nutrient->value;
                             echo "<td>{$nutrient->parent->title_ru}</td>";
                             echo "<td>$value</td>";
