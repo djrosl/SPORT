@@ -85,6 +85,10 @@ class Product extends ActiveRecord
 
 	public function getSameOne(){
 		$words = explode(',', strtolower(str_replace(' ', '', $this->title_en)));
+		$words2 = array_unique(explode(' ', strtolower(str_replace(',', ' ', $this->title_en))));
+		$newarr = array_unique(array_merge($words, $words2));
+		$words = array_filter($newarr, function($value) { return $value !== ''; });
+
 		$rows = (new \yii\db\Query())
 				->select(['id'])
 				->from('product')
@@ -96,7 +100,7 @@ class Product extends ActiveRecord
 			$rows->orWhere("MATCH(title_en) AGAINST ('+".trim(implode(' +', array_slice($arr,$i,1)))."' IN BOOLEAN MODE)");
 		}
 
-				//$rows->groupBy('ndb_slug')->all();
+				$rows->groupBy('ndb_slug');
 
 
 		return array_slice($rows->all(),0,20);
