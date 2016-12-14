@@ -100,7 +100,7 @@ class Product extends ActiveRecord
 			$rows->orWhere("MATCH(title_en) AGAINST ('+".trim(implode(' +', array_slice($arr,$i,1)))."' IN BOOLEAN MODE)");
 		}
 
-				$rows->groupBy('ndb_slug');
+				$rows->andWhere(['!=','ndb_slug',$this->ndb_slug]);
 
 
 		return array_slice($rows->all(),0,20);
