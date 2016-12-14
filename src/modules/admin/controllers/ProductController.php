@@ -50,6 +50,7 @@ class ProductController extends Controller
         $models = Product::find()->where(['in','id',$ids])->all();
 
         return $this->render('group', [
+        		'model'=>Product::findOne(['id'=>$id]),
             'models'=>$models
         ]);
     }

@@ -1,6 +1,8 @@
 <?php
 
 use yii\helpers\Html;
+use yii\widgets\DetailView;
+
 /* @var $this yii\web\View */
 /* @var $searchModel app\modules\admin\models\ProductSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -12,7 +14,23 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
         <div class="row">
-
+					<?= DetailView::widget([
+							'model' => $model,
+							'attributes' => [
+								/*'id',
+																'ndb_id',
+																'category_id',
+																'diet_type_id',
+																'slug',*/
+									'title_en',
+									'ndb_slug',
+									'ndb_id',
+								/*'title_ru',
+																'image',
+																'description_short:ntext',
+																'description_full:ntext',*/
+							],
+					]) ?>
 
                 <?php foreach($models as $model): ?>
             <div class="col-md-6">
