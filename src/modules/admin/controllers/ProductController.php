@@ -44,8 +44,9 @@ class ProductController extends Controller
         ]);
     }
 
-    public function actionGroup($id){
-        $ids = Product::findOne(['id'=>$id])->getSame('id');
+    public function actionGroup($id, $one = false){
+        $ids = $one ? Product::findOne(['id'=>$id])->getSameOne() : Product::findOne(['id'=>$id])->getSame();
+				//$idsOne = Product::findOne(['id'=>$id])->getSameOne('id');
         $models = Product::find()->where(['in','id',$ids])->all();
 
         return $this->render('group', [

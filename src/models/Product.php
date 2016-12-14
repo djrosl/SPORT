@@ -65,13 +65,13 @@ class Product extends ActiveRecord
         return $this->hasMany(ProductNutrient::className(), ['product_id'=>'id']);
     }
 
-    public function getSame($attribute = '*'){
+    public function getSame(){
         $words = explode(',', strtolower(str_replace(' ', '', $this->title_en)));
         $rows = (new \yii\db\Query())
-            ->select(['*'])
+            ->select(['id'])
             ->from('product')
             ->where("MATCH(title_en) AGAINST ('+".trim(implode(' +', $words))."' IN BOOLEAN MODE)")
-            ->andWhere(['!=', 'ngb_slug', $this->ndb_slug])
+						->groupBy('ndb_slug')
             ->all();
 
         /*$arr = array_filter($rows, function($item) use ($words){
@@ -82,6 +82,25 @@ class Product extends ActiveRecord
 
         return $rows;
     }
+
+	public function getSameOne(){
+		$words = explode(',', strtolower(str_replace(' ', '', $this->title_en)));
+		$rows = (new \yii\db\Query())
+				->select(['id'])
+				->from('product')
+				->where("MATCH(title_en) AGAINST ('+".trim(implode(' +', $words))."' IN BOOLEAN MODE)");
+
+		for($i=0;$i<count($words);$i++){
+
+			$arr = array_merge($words, []);
+			$rows->orWhere("MATCH(title_en) AGAINST ('+".trim(implode(' +', array_slice($arr,$i,1)))."' IN BOOLEAN MODE)");
+		}
+
+				//$rows->groupBy('ndb_slug')->all();
+
+
+		return array_slice($rows->all(),0,20);
+	}
 }
 
 
