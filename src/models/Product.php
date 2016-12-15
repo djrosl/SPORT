@@ -103,7 +103,7 @@ class Product extends ActiveRecord
 		}
 
 		$rows->andWhere(['!=','ndb_slug',$this->ndb_slug])
-				->andWhere(['<=', new Expression('countwords(title_en)'), count($words)+1]);
+				->andWhere(['<=', new Expression('wordcount(title_en)'), count($words)+1]);
 
 
 		return array_slice($rows->all(),0,20);
