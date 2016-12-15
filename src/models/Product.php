@@ -93,17 +93,17 @@ class Product extends ActiveRecord
 		$rows = (new \yii\db\Query())
 				->select(['id'])
 				->from('product')
-				->where("MATCH(title_en) AGAINST ('+".trim(implode(' +', $words))." +(.+)' IN BOOLEAN MODE)");
+				->where("MATCH(title_en) AGAINST ('+".trim(implode(' +', $words))."' IN BOOLEAN MODE)");
 
 		for($i=0;$i<count($words);$i++){
 			$arr = $words;
 			unset($arr[$i]);
 
-			$rows->orWhere("MATCH(title_en) AGAINST ('+".trim(implode(' +', $arr))." +(.+)' IN BOOLEAN MODE)");
+			$rows->orWhere("MATCH(title_en) AGAINST ('+".trim(implode(' +', $arr))."' IN BOOLEAN MODE)");
 		}
 
 		$rows->andWhere(['!=','ndb_slug',$this->ndb_slug])
-				->andWhere(['<=', new Expression('wordcount(title_en)'), count($words)+1]);
+				->andWhere(['<=', 'wordcount(title_en)', count($words)+1]);
 
 
 		return array_slice($rows->all(),0,20);
