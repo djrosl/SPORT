@@ -86,7 +86,7 @@ class Product extends ActiveRecord
 
 	public function getSameOne(){
 		$words = explode(',', strtolower(str_replace(' ', '', $this->title_en)));
-		$words2 = array_unique(explode(' ', strtolower(str_replace(',', ' ', $this->title_en))));
+		$words2 = array_unique(explode(' ', strtolower(str_replace(',', '', $this->title_en))));
 		$newarr = array_unique(array_merge($words, $words2));
 		$words = array_filter($newarr, function($value) { return $value !== ''; });
 
