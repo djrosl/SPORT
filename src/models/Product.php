@@ -95,12 +95,13 @@ class Product extends ActiveRecord
 				->where("MATCH(title_en) AGAINST ('+".trim(implode(' +', $words))."' IN BOOLEAN MODE)");
 
 		for($i=0;$i<count($words);$i++){
+			$arr = $words;
+			unset($arr[$i]);
 
-			$arr = array_merge($words, []);
-			$rows->orWhere("MATCH(title_en) AGAINST ('+".trim(implode(' +', array_slice($arr,$i,1)))."' IN BOOLEAN MODE)");
+			$rows->orWhere("MATCH(title_en) AGAINST ('+".trim(implode(' +', $arr))."' IN BOOLEAN MODE)");
 		}
 
-				$rows->andWhere(['!=','ndb_slug',$this->ndb_slug]);
+		$rows->andWhere(['!=','ndb_slug',$this->ndb_slug]);
 
 
 		return array_slice($rows->all(),0,20);
