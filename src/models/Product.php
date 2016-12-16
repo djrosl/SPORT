@@ -119,7 +119,9 @@ class Product extends ActiveRecord
 				->from('product');
 
 		$rows->where(['like', 'title_en', '%'.$words[0].'%', false]);
-		$rows->andWhere(['like', 'title_en', '%'.$words[1].'%', false]);
+		if(!empty($words[1])){
+			$rows->andWhere(['like', 'title_en', '%'.$words[1].'%', false]);
+		}
 
 		$rows->andWhere(['!=','ndb_slug',$this->ndb_slug])
 				->andWhere(['<=', 'wordcount(title_en)', count($words)+1]);
