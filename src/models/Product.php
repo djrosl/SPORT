@@ -84,7 +84,7 @@ class Product extends ActiveRecord
         return $rows;
     }
 
-	public function getSameOne(){
+	/*public function getSameOne(){
 		$words = explode(',', strtolower(str_replace(' ', '', $this->title_en)));
 		$words2 = array_unique(explode(' ', strtolower(str_replace(',', '', $this->title_en))));
 		$newarr = array_unique(array_merge($words, $words2));
@@ -95,12 +95,31 @@ class Product extends ActiveRecord
 				->from('product')
 				->where("MATCH(title_en) AGAINST ('+".trim(implode(' +', $words))."' IN BOOLEAN MODE)");
 
-		for($i=0;$i<count($words);$i++){
+		for($i=1;$i<count($words)-1;$i++){
 			$arr = $words;
 			unset($arr[$i]);
 
-			$rows->orWhere("MATCH(title_en) AGAINST ('+".trim(implode(' +', $arr))."' IN BOOLEAN MODE)");
+			$rows->orWhere("MATCH(title_en) AGAINST ('".trim(implode(' +', $arr))."' IN BOOLEAN MODE)");
 		}
+
+		$rows->andWhere(['!=','ndb_slug',$this->ndb_slug])
+				->andWhere(['<=', 'wordcount(title_en)', count($words)+1]);
+
+
+		return array_slice($rows->all(),0,20);
+	}*/
+	public function getSameOne(){
+		$words = explode(',', strtolower(str_replace(' ', '', $this->title_en)));
+		$words2 = array_unique(explode(' ', strtolower(str_replace(',', '', $this->title_en))));
+		$newarr = array_unique(array_merge($words, $words2));
+		$words = array_filter($newarr, function($value) { return $value !== ''; });
+
+		$rows = (new \yii\db\Query())
+				->select(['id'])
+				->from('product');
+
+		$rows->where(['like', 'title_en', '%'.$words[0].'%', false]);
+		$rows->andWhere(['like', 'title_en', '%'.$words[1].'%', false]);
 
 		$rows->andWhere(['!=','ndb_slug',$this->ndb_slug])
 				->andWhere(['<=', 'wordcount(title_en)', count($words)+1]);
