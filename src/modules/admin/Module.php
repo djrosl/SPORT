@@ -23,6 +23,10 @@ class Module extends \nullref\admin\Module implements IAdminModule
                     'label' => 'Продукты',
                     'url' => ['/admin/product'],
                 ],
+								[
+										'label' => 'Группы продуктов',
+										'url' => ['/admin/group'],
+								],
             ]
         ];
     }

@@ -5,14 +5,14 @@ namespace app\modules\admin\controllers;
 use Yii;
 use app\models\Product;
 use app\modules\admin\models\ProductSearch;
-use yii\web\Controller;
+use nullref\admin\components\AdminController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
  * ProductController implements the CRUD actions for Product model.
  */
-class ProductController extends Controller
+class ProductController extends AdminController
 {
     /**
      * @inheritdoc
