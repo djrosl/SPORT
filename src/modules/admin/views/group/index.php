@@ -51,9 +51,9 @@ $this->title = 'Поиск / добавление в группу'; ?>
             <tbody>
                 <?php foreach($models as $model): ?>
                 <tr>
-                    <td><input type="checkbox" name="product[<?=$model->id?>]" value="<?=$model->id?>" id="p<?=$model->id?>"></td>
-                    <td><label for="p<?= $model->id ?>"><?=$model->title_en?></label></td>
-                    <td><?=$model->ndb_slug?></td>
+                    <td><input type="checkbox" name="product[<?=$model['id']?>]" value="<?=$model['id']?>" id="p<?=$model['id']?>"></td>
+                    <td><label for="p<?= $model['id'] ?>"><?=$model['title_en']?></label></td>
+                    <td><?=$model['ndb_slug']?></td>
                 </tr>
                 <?php endforeach; ?>
             </tbody>

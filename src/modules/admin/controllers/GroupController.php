@@ -23,15 +23,24 @@ class GroupController extends AdminController
 	public function actionIndex(){
 		$search = \Yii::$app->request->post('search');
 
+		$words = explode(' ', $search);
 		if($search){
-			$query = Product::find()->where(['like','title_en','% '.$search.' %', false])
+		$rows = (new \yii\db\Query())
+				->select(['id','title_en','ndb_slug'])
+				->from('product')
+				->where("MATCH(title_en) AGAINST ('+".trim(implode(' +', $words))."' IN BOOLEAN MODE)")
+				->all();
+
+		//var_dump($rows);die;
+
+		/*	$query = Product::find()->where(['like','title_en','% '.$search.' %', false])
 			->orWhere(['like','title_en','% '.$search.', %', false])
 			->orWhere(['like','title_en','%'.$search.', %', false])
 			->orWhere(['like','title_en', $search.', %', false])->all();
-					//->andWhere(['<','wordcount(title_en)',7])->all();
+					//->andWhere(['<','wordcount(title_en)',7])->all();*/
 
 			return $this->render('index', [
-					'models' => $query,
+					'models' => $rows,
 				'search'=>$search
 			]);
 		}
