@@ -27,8 +27,8 @@ class GroupController extends AdminController
 			$query = Product::find()->where(['like','title_en','% '.$search.' %', false])
 			->orWhere(['like','title_en','% '.$search.', %', false])
 			->orWhere(['like','title_en','%'.$search.', %', false])
-			->orWhere(['like','title_en', $search.', %', false])
-					->andWhere(['<','wordcount(title_en)',7])->all();
+			->orWhere(['like','title_en', $search.', %', false]);
+					//->andWhere(['<','wordcount(title_en)',7])->all();
 
 			return $this->render('index', [
 					'models' => $query,
