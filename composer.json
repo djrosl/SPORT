@@ -23,7 +23,11 @@
         "nullref/yii2-admin": "dev-master",
         "moonlandsoft/yii2-phpexcel": "*",
         "alexinator1/yii2-jta": "^0.2.4",
-        "voskobovich/yii2-many-many-behavior": "^3.0"
+        "voskobovich/yii2-many-many-behavior": "^3.0",
+        "mihaildev/yii2-ckeditor": "^1.0",
+        "costa-rico/yii2-images": "^1.0",
+        "voskobovich/yii2-linker-behavior": "^4.0",
+        "kartik-v/yii2-widget-select2": "@dev"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

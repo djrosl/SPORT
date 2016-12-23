@@ -27,6 +27,19 @@ class Module extends \nullref\admin\Module implements IAdminModule
 										'label' => 'Группы продуктов',
 										'url' => ['/admin/group'],
 								],
+								[
+										'label' => 'Упражнения',
+										'items'=> [
+												[
+														'label' => 'Мышцы',
+														'url' => ['/admin/muscle'],
+												],
+												[
+														'label' => 'Упражнения',
+														'url' => ['/admin/exercise'],
+												],
+										],
+								],
             ]
         ];
     }
