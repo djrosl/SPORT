@@ -45,6 +45,13 @@ class Exercise extends \yii\db\ActiveRecord
 			18=>"велосипед"
 	];
 
+	const CAPACITIES = [
+			"компрессионное горизонтальное",
+			"компрессионное вертикальное",
+			"декомпрессионное горизонтальное",
+			"декомпрессионное вертикальное",
+	];
+
 	const PLANE_HORIZONTAL = 1;
 	const PLANE_SAGITAL = 2;
 
@@ -84,7 +91,7 @@ class Exercise extends \yii\db\ActiveRecord
     {
         return [
             [['title'], 'required'],
-            [['plane', 'type', 'head_down', 'axis_power', 'trauma', 'ccal'], 'integer'],
+            [['plane', 'type', 'head_down', 'axis_power', 'trauma', 'ccal', 'capacity'], 'integer'],
 						[['basic', 'stability', 'synergy'], 'safe'],
             [['title', 'equipment', 'target'], 'string', 'max' => 255],
 						[['photo', 'video'], 'safe'],

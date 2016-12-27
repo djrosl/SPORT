@@ -71,9 +71,17 @@ $targets = ArrayHelper::map(Muscle::find()->groupBy(['group'])->all(), 'group', 
     ]) ?>
 
     <?= $form->field($model, 'type')->dropDownList([
-				$model::TYPE_BASE=>'базовое',
-				$model::TYPE_ISOLATE=>'изолированное'
+				$model::TYPE_BASE=>'Многосуставное',
+				$model::TYPE_ISOLATE=>'Односуставное'
 		]) ?>
+
+	<?= $form->field($model, 'capacity')->widget(Select2::className(), [
+			'data' => $model::CAPACITIES,
+			'options' => [
+					'placeholder' => 'Выбрать',
+					'multiple' => false
+			],
+	]) ?>
 
     <?= $form->field($model, 'head_down')->dropDownList([
 				1=>'да',
