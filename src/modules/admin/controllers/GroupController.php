@@ -83,6 +83,10 @@ class GroupController extends AdminController
 
         if($post['groupExist']){
 		    $group = ProductGroup::findOne(['id'=>$post['groupExist']]);
+		    foreach($group->products as $ptg){
+		        $ptg->product->in_group = 0;
+		        $ptg->product->save();
+            }
             ProductToGroup::deleteAll(['group_id'=>$post['groupExist']]);
         } else {
             $group = new ProductGroup();
@@ -95,6 +99,9 @@ class GroupController extends AdminController
                 $model->group_id = $group->id;
                 $model->product_id = $product;
                 $model->save();
+
+                $model->product->in_group = 1;
+                $model->product->save();
             }
         }
 
@@ -120,7 +127,15 @@ class GroupController extends AdminController
 
     public function actionDelete($group){
         if($group){
-            ProductGroup::find()->where(['id'=>$group])->one()->delete();
+
+            $grp = ProductGroup::findOne(['id'=>$group]);
+            foreach($grp->products as $ptg){
+                $ptg->product->in_group = 0;
+                $ptg->product->save();
+            }
+            ProductToGroup::deleteAll(['group_id'=>$group]);
+
+            $grp->delete();
 
             return $this->redirect(Url::to(['index']));
         }

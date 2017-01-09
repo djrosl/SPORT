@@ -45,6 +45,8 @@ class ProductSearch extends Product
 
         // add conditions that should always apply here
 
+        $query->where(['in_group'=>0]);
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -71,6 +73,7 @@ class ProductSearch extends Product
             ->andFilterWhere(['like', 'image', $this->image])
             ->andFilterWhere(['like', 'description_short', $this->description_short])
             ->andFilterWhere(['like', 'description_full', $this->description_full]);
+
 
         return $dataProvider;
     }
