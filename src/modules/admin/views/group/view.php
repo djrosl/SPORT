@@ -6,6 +6,7 @@
  * Time: 8:54
  */
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
 $this->title = $group->title;
@@ -14,8 +15,10 @@ $this->title = $group->title;
 <div class="admin-index">
 	<div class="row">
 		<div class="col-lg-12">
-			<h1><?=$group->title?></h1>
+			<h1><?=$group->title?> </h1>
+
 		</div>
+
         <div class="col-lg-12">
             <?php ActiveForm::begin([]); ?>
             <div class="form-group"><input class="form-control" name="state" value="<?=$group->state?>" type="text" placeholder="Возможные состояния (home-brewed, full strength, etc.)"></div>
@@ -29,6 +32,19 @@ $this->title = $group->title;
 
 
         </div>
+
+        <div class="col-lg-3">
+            <div class="text-left">
+                <?=Html::a('Добавить продукты', Url::to(['index', 'group'=>$group->id]))?>
+            </div>
+        </div>
+        <div class="col-lg-9">
+            <div class="text-left">
+                <?=Html::a('Удалить группу', Url::to(['delete', 'group'=>$group->id]), ['class'=>'text-danger'])?>
+            </div>
+        </div>
+
+
 		<!-- /.col-lg-12 -->
 			<?php foreach($group->products as $model): ?>
           <div class="col-md-6 prod-group-item">

@@ -35,7 +35,7 @@ $this->title = 'Поиск / добавление в группу'; ?>
     </div>
     <!-- /.row -->
 
-    <?php if(!empty($models)): ?>
+    <?php if(!empty($models) || !empty($exist)): ?>
         <?php $group = ActiveForm::begin([
           'action'=>Url::to(['save-group'])
         ]); ?>
@@ -48,6 +48,15 @@ $this->title = 'Поиск / добавление в группу'; ?>
                     <td>База</td>
                 </tr>
             </thead>
+            <tbody>
+            <?php foreach($exist as $model): ?>
+                <tr>
+                    <td><input type="checkbox" checked="checked" name="product[<?=$model['id']?>]" value="<?=$model['id']?>" id="p<?=$model['id']?>"></td>
+                    <td><label for="p<?= $model['id'] ?>"><?=$model['title_en']?></label></td>
+                    <td><?=$model['ndb_slug']?></td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
             <tbody>
                 <?php foreach($models as $model): ?>
                 <tr>
@@ -63,7 +72,8 @@ $this->title = 'Поиск / добавление в группу'; ?>
           <div class="col-md-12"><h4>Название группы продуктов</h4></div>
           <div class="col-md-6">
               <div class="form-group">
-                  <input type="text" class="form-control" name="name" value="<?=$search?>">
+                  <input type="hidden" name="groupExist" value="<?=Yii::$app->request->get('group') ? Yii::$app->request->get('group') : false?>">
+                  <input type="text" class="form-control" name="name" value="<?=$title ? $title : $search?>">
               </div>
           </div>
           <div class="col-md-6">

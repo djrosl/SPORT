@@ -14,36 +14,59 @@ use app\models\ProductGroup;
 use app\models\ProductToGroup;
 use nullref\admin\components\AdminController;
 use yii\data\Pagination;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use yii\web\NotFoundHttpException;
 
 class GroupController extends AdminController
 {
 
-	public function actionIndex(){
+	public function actionIndex($group = false){
 		$search = \Yii::$app->request->post('search');
+
+		$title = '';
+
+		if($group){
+		    $title = ProductGroup::findOne(['id'=>$group])->title;
+        }
 
 		$words = explode(' ', $search);
 		if($search){
-		$rows = (new \yii\db\Query())
+		    $rows = (new \yii\db\Query())
 				->select(['id','title_en','ndb_slug'])
 				->from('product')
 				->where("MATCH(title_en) AGAINST ('+".trim(implode(' +', $words))."' IN BOOLEAN MODE)")
 				->all();
 
-		//var_dump($rows);die;
-
-		/*	$query = Product::find()->where(['like','title_en','% '.$search.' %', false])
-			->orWhere(['like','title_en','% '.$search.', %', false])
-			->orWhere(['like','title_en','%'.$search.', %', false])
-			->orWhere(['like','title_en', $search.', %', false])->all();
-					//->andWhere(['<','wordcount(title_en)',7])->all();*/
+		    $exist = [];
+            if($group){
+                $exist = array_map(function($item){
+                    return $item->product;
+                }, ProductGroup::findOne(['id'=>$group])->products);
+            }
 
 			return $this->render('index', [
-					'models' => $rows,
-				'search'=>$search
+			    'exist'=>$exist,
+                'models' => $rows,
+				'search'=>$search,
+                'title'=>$title
 			]);
 		}
+
+        if($group){
+            $exist = array_map(function($item){
+                return $item->product;
+            }, ProductGroup::findOne(['id'=>$group])->products);
+
+            $rows = [];
+
+            return $this->render('index', [
+                'exist'=>$exist,
+                'models' => $rows,
+                'search'=>$search,
+                'title'=>$title
+            ]);
+        }
 
 		return $this->render('index', [
 				'groups'=>ProductGroup::find()->all(),
@@ -58,15 +81,22 @@ class GroupController extends AdminController
 
 		//var_dump($post['name']);die;
 
-		$group = new ProductGroup();
+        if($post['groupExist']){
+		    $group = ProductGroup::findOne(['id'=>$post['groupExist']]);
+            ProductToGroup::deleteAll(['group_id'=>$post['groupExist']]);
+        } else {
+            $group = new ProductGroup();
+        }
 		$group->title = $post['name'];
 		$group->save();
-		foreach($post['product'] as $product) {
-			$model = new ProductToGroup();
-			$model->group_id = $group->id;
-			$model->product_id = $product;
-			$model->save();
-		}
+		if(!empty($post['product'])){
+            foreach($post['product'] as $product) {
+                $model = new ProductToGroup();
+                $model->group_id = $group->id;
+                $model->product_id = $product;
+                $model->save();
+            }
+        }
 
 		return $this->redirect(Url::to(['group/view','id'=>$group->id]));
 
@@ -87,5 +117,15 @@ class GroupController extends AdminController
 
 		throw new NotFoundHttpException();
 	}
+
+    public function actionDelete($group){
+        if($group){
+            ProductGroup::find()->where(['id'=>$group])->one()->delete();
+
+            return $this->redirect(Url::to(['index']));
+        }
+
+        throw new NotFoundHttpException();
+    }
 
 }
