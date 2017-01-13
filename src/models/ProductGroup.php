@@ -44,6 +44,6 @@ class ProductGroup extends \yii\db\ActiveRecord
     public function getProducts(){
     	return $this->hasMany(ProductToGroup::className(),[
     			'group_id'=>'id'
-			])->orderBy(['poducts.product.title_ru ASC'=>SORT_ASC]);
+			])->joinWith('product')->orderBy(['product.title_ru'=>SORT_ASC]);
 		}
 }
