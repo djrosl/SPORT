@@ -36,6 +36,7 @@ class GroupController extends AdminController
 				->select(['id','title_en','ndb_slug'])
 				->from('product')
 				->where("MATCH(title_en) AGAINST ('+".trim(implode(' +', $words))."' IN BOOLEAN MODE)")
+                ->andWhere(['in_group'=>0])
 				->all();
 
 		    $exist = [];
