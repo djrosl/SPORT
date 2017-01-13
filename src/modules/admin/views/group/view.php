@@ -46,7 +46,7 @@ $this->title = $group->title;
 
 
 		<!-- /.col-lg-12 -->
-			<?php foreach($group->getProducts()->joinWith('product')->orderBy('product.title_ru ASC')->all() as $model): ?>
+			<?php foreach($group->products as $model): ?>
           <div class="col-md-6 prod-group-item">
               <h3><?=$model->product->title_en?> (<?=$model->product->ndb_slug?>)</h3>
               <div style="height: 400px;overflow-y:scroll">
