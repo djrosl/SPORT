@@ -51,7 +51,7 @@ $this->title = $group->title;
         <?php $dataProvider = new ActiveDataProvider([
             'query' => $group->getProducts(),
             'pagination' => [
-                'pageSize' => 10000,
+                'pageSize' => 500,
             ],
         ]); ?>
 
