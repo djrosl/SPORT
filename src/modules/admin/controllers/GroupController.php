@@ -35,7 +35,7 @@ class GroupController extends AdminController
 		    $rows = (new \yii\db\Query())
 				->select(['id','title_en','ndb_slug'])
 				->from('product')
-				->where("MATCH(title_en) AGAINST ('+".trim(implode('* +', $words))."' IN BOOLEAN MODE)")
+				->where("MATCH(title_en) AGAINST ('+".trim(implode(' +', $words))."' IN BOOLEAN MODE)")
                 ->orWhere(['like', 'title_en', $words[0]])
                 ->andWhere(['in_group'=>0])
 				->all();
