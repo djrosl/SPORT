@@ -49,9 +49,9 @@ $this->title = $group->title;
 			<?php foreach($group->products as $model): ?>
           <div class="col-md-6 prod-group-item">
               <h3><?=$model->product->title_en?> (<?=$model->product->ndb_slug?>)</h3>
-              <div style="height: 400px;overflow-y:scroll">
+              <!-- <div style="height: 400px;overflow-y:scroll">
                   <table class="table table-bordered">
-										<?php foreach($model->product->getNutrients()->orderBy('nutrient_id ASC')->all() as $nutrient) {
+										<?php /*foreach($model->product->getNutrients()->orderBy('nutrient_id ASC')->all() as $nutrient) {
 											echo "<tr>";
 
 											$value = $nutrient->value;
@@ -59,9 +59,9 @@ $this->title = $group->title;
 											echo "<td>$value</td>";
 											echo "<td>{$nutrient->parent->unit}</td>";
 											echo "</tr>";
-										} ?>
+										}*/ ?>
                   </table>
-              </div>
+              </div> -->
           </div>
 			<?php endforeach; ?>
 	</div>
