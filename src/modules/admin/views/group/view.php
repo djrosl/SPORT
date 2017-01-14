@@ -5,6 +5,8 @@
  * Date: 17.12.16
  * Time: 8:54
  */
+use yii\data\ActiveDataProvider;
+use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
@@ -33,38 +35,47 @@ $this->title = $group->title;
 
         </div>
 
-        <div class="col-lg-3">
-            <div class="text-left">
+        <div class="col-lg-12">
+            <div class="text-right">
                 <?=Html::a('Добавить продукты', Url::to(['index', 'group'=>$group->id]))?>
-            </div>
-        </div>
-        <div class="col-lg-9">
-            <div class="text-left">
+                &nbsp;
+                &nbsp;
+                &nbsp;
                 <?=Html::a('Удалить группу', Url::to(['delete', 'group'=>$group->id]), ['class'=>'text-danger'])?>
             </div>
         </div>
 
 
 		<!-- /.col-lg-12 -->
-			<?php foreach($group->products as $model): ?>
-          <div class="col-md-6 prod-group-item">
-              <h3><?=$model->product->title_en?> (<?=$model->product->ndb_slug?>)</h3>
-              <a href="<?=Url::to(['delete-product-from-group', 'group'=>$group->id, 'product'=>$model->id])?>" class="btn btn-danger">Удалить</a>
-              <!-- <div style="height: 400px;overflow-y:scroll">
-                  <table class="table table-bordered">
-										<?php /*foreach($model->product->getNutrients()->orderBy('nutrient_id ASC')->all() as $nutrient) {
-											echo "<tr>";
 
-											$value = $nutrient->value;
-											echo "<td>{$nutrient->parent->title_ru}</td>";
-											echo "<td>$value</td>";
-											echo "<td>{$nutrient->parent->unit}</td>";
-											echo "</tr>";
-										}*/ ?>
-                  </table>
-              </div> -->
-          </div>
-			<?php endforeach; ?>
+        <?php $dataProvider = new ActiveDataProvider([
+            'query' => $group->getProducts(),
+            'pagination' => [
+                'pageSize' => 10000,
+            ],
+        ]); ?>
+
+            <?=GridView::widget([
+                'dataProvider'=>$dataProvider,
+                'columns'=>[
+                    'product.title_en',
+                    [
+                        'label'=>'Нутриенты',
+                        'format'=>'html',
+                        'value'=>function($item){
+                            //var_dump($item->product->id);die;
+                            return Html::a('Показать нутриенты', '', ['title'=>$item->product->id, 'class'=>'text-info show-nutrients']);
+                        }
+                    ],
+                    [
+                        'label'=>'Удалить',
+                        'format'=>'html',
+                        'value'=>function($item) use ($group){
+                            return Html::a('Удалить', Url::to(['delete-product-from-group', 'group'=>$group->id, 'product'=>$item->id]), ['class'=>'text-danger']);
+                        }
+                    ],
+                ]
+            ])?>
 	</div>
 	<!-- /.row -->
 </div>

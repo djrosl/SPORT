@@ -15,6 +15,22 @@
             $('.prod-group-item').removeClass('hidden');
         }
     });
+
+    $('.show-nutrients').click(function(e){
+        e.preventDefault();
+        var that = this;
+        var id = $(this).attr('title');
+        $.get('/admin/main/get-nutrients?id='+id, function(data){
+            var html = '<table class="table table-condensed">';
+            $.each(data, function(){
+                html+='<tr><td>'+this.parent.title_ru+'</td><td>'+this.value+' '+this.parent.unit+'</td></tr>';
+            });
+            html+='</table>';
+
+            $(that).parent().prev().append(html);
+            $(that).hide();
+        });
+    });
 })($);
 
 

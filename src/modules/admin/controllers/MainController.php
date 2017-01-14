@@ -2,6 +2,7 @@
 
 namespace app\modules\admin\controllers;
 
+use app\models\ProductNutrient;
 use nullref\admin\components\AdminController;
 use nullref\admin\models\Admin;
 use nullref\admin\models\LoginForm;
@@ -104,5 +105,10 @@ class MainController extends AdminController
             ]);
         }
         throw new NotFoundHttpException();
+    }
+
+    public function actionGetNutrients($id=0){
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        return ProductNutrient::find()->where(['product_id'=>$id])->with('parent')->asArray()->all();
     }
 }
