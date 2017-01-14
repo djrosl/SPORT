@@ -49,13 +49,7 @@ $this->title = 'Поиск / добавление в группу'; ?>
                 </tr>
             </thead>
             <tbody>
-            <?php foreach($exist as $model): ?>
-                <tr>
-                    <td><input type="checkbox" checked="checked" name="product[<?=$model['id']?>]" value="<?=$model['id']?>" id="p<?=$model['id']?>"></td>
-                    <td><label for="p<?= $model['id'] ?>"><?=$model['title_en']?></label></td>
-                    <td><?=$model['ndb_slug']?></td>
-                </tr>
-            <?php endforeach; ?>
+
             </tbody>
             <tbody>
                 <?php foreach($models as $model): ?>

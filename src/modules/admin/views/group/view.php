@@ -49,6 +49,7 @@ $this->title = $group->title;
 			<?php foreach($group->products as $model): ?>
           <div class="col-md-6 prod-group-item">
               <h3><?=$model->product->title_en?> (<?=$model->product->ndb_slug?>)</h3>
+              <a href="<?=Url::to(['delete-product-from-group', 'group'=>$group->id, 'product'=>$model->id])?>" class="btn btn-danger">Удалить</a>
               <!-- <div style="height: 400px;overflow-y:scroll">
                   <table class="table table-bordered">
 										<?php /*foreach($model->product->getNutrients()->orderBy('nutrient_id ASC')->all() as $nutrient) {

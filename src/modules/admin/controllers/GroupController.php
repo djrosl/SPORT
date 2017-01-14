@@ -82,11 +82,11 @@ class GroupController extends AdminController
 
         if(!empty($post['groupExist'])){
 		    $group = ProductGroup::findOne(['id'=>$post['groupExist']]);
-		    foreach($group->products as $ptg){
+		    /*foreach($group->products as $ptg){
 		        $ptg->product->in_group = 0;
 		        $ptg->product->save();
             }
-            ProductToGroup::deleteAll(['group_id'=>$post['groupExist']]);
+            ProductToGroup::deleteAll(['group_id'=>$post['groupExist']]);*/
         } else {
             $group = new ProductGroup();
         }
@@ -140,6 +140,15 @@ class GroupController extends AdminController
         }
 
         throw new NotFoundHttpException();
+    }
+
+    public function actionDeleteProductFromGroup($product, $group){
+        $prod = ProductToGroup::findOne(['id'=>$product]);
+
+        $prod->product->in_group = 0;
+        $prod->product->save();
+        $prod->delete();
+        return $this->redirect(Url::to(['/admin/group/view', 'id'=>$group]));
     }
 
 }
