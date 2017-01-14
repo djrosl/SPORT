@@ -80,9 +80,7 @@ class GroupController extends AdminController
 			return $this->render('index');
 		}
 
-		//var_dump($post['name']);die;
-
-        if($post['groupExist']){
+        if(!empty($post['groupExist'])){
 		    $group = ProductGroup::findOne(['id'=>$post['groupExist']]);
 		    foreach($group->products as $ptg){
 		        $ptg->product->in_group = 0;
