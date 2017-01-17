@@ -101,9 +101,9 @@ class ExerciseController extends AdminController
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        $vid = $model->video;
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-
+                    $model->video = $vid;
 					$photo = UploadedFile::getInstance($model, 'photo');
 					$video = UploadedFile::getInstance($model, 'video');
 
@@ -117,8 +117,8 @@ class ExerciseController extends AdminController
 						$path = date('U').'-'.$video->baseName.'.'.$video->extension;
 						$video->saveAs(Yii::getAlias('@webroot').'/files/'.$path);
 						$model->video = '/files/'.$path;
-						$model->save();
-					}
+                    }
+                    $model->save();
 
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
