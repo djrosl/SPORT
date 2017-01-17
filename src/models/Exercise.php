@@ -93,7 +93,7 @@ class Exercise extends \yii\db\ActiveRecord
             [['title'], 'required'],
             [['plane', 'type', 'head_down', 'axis_power', 'trauma', 'ccal', 'capacity'], 'integer'],
 						[['basic', 'stability', 'synergy'], 'safe'],
-            [['title', 'equipment', 'target'], 'string', 'max' => 255],
+            [['title','title_en', 'equipment', 'target'], 'string', 'max' => 255],
 						[['photo', 'video'], 'safe'],
         ];
     }
