@@ -36,6 +36,18 @@ $targets = ArrayHelper::map(Muscle::find()->groupBy(['group'])->all(), 'group', 
         ]
     ]) ?>
 
+    <?= $form->field($model, 'title_en')->widget(\yii\jui\AutoComplete::classname(), [
+        'clientOptions' => [
+            'minLength'=>0,
+            'source' => array_map(function($item){
+                return $item->title_en;
+            }, Exercise::find()->all()),
+        ],
+        'options'=>[
+            'class'=>'form-control'
+        ]
+    ]) ?>
+
     <?= $form->field($model, 'photo')->fileInput(); ?>
 
     <?= $form->field($model, 'video')->fileInput(); ?>
