@@ -5,8 +5,10 @@
  * Date: 17.12.16
  * Time: 8:54
  */
+use app\models\ProductGroup;
 use yii\data\ActiveDataProvider;
 use yii\grid\GridView;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
@@ -55,10 +57,17 @@ $this->title = $group->title;
             ],
         ]); ?>
 
+        <?php ActiveForm::begin([
+
+        ]); ?>
+
             <?=GridView::widget([
                 'dataProvider'=>$dataProvider,
                 'columns'=>[
+                    ['class' => 'yii\grid\CheckboxColumn'],
+
                     'product.title_en',
+
                     [
                         'label'=>'Нутриенты',
                         'format'=>'html',
@@ -76,6 +85,23 @@ $this->title = $group->title;
                     ],
                 ]
             ])?>
+
+            <div class="bottom row">
+                <div class="col-md-3">
+                    <?=Html::dropDownList('action', 0, ['move'=>'Переместить', 'delete'=>"Удалить"], ['class'=>'form-control'])?>
+                </div>
+                <div class="col-md-3">
+                    <?=Html::dropDownList('group', 0,
+                        ArrayHelper::map(ProductGroup::find()->all(), 'id', 'title')
+                        , ['class'=>'form-control'])?>
+                </div>
+                <div class="col-md-3">
+                    <?=Html::submitButton('OK', ['class'=>'btn btn-success'])?>
+                </div>
+            </div>
+
+        <?php ActiveForm::end(); ?>
+
 	</div>
 	<!-- /.row -->
 </div>

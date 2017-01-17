@@ -111,6 +111,21 @@ class GroupController extends AdminController
 
 	public function actionView($id){
 		if($id){
+		    $post = \Yii::$app->request->post();
+		    if($post){
+		        if($post['action'] == 'move'){
+                    $items = ProductToGroup::find()->where(['in', 'id', $post['selection']])->all();
+		            foreach ($items as $item){
+		                $item->group_id = $post['group'];
+		                $item->save();
+                    }
+                }
+
+                if($post['action'] == 'delete'){
+		            ProductToGroup::deleteAll(['in', 'id', $post['selection']]);
+                }
+            }
+
 			$group = ProductGroup::find()->where(['id'=>$id])->one();
 			if(\Yii::$app->request->post('state')){
 				$group->state = \Yii::$app->request->post('state');
