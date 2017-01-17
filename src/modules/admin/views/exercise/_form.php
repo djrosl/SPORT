@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Exercise;
 use app\models\Muscle;
 use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
@@ -11,7 +12,10 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 
 
-$muscles = ArrayHelper::map(Muscle::find()->all(), 'id', 'title_ru');
+$muscles = ArrayHelper::merge(
+    ArrayHelper::map(Muscle::find()->all(), 'id', 'title_ru'),
+    ArrayHelper::map(Muscle::find()->all(), 'id', 'title_lat')
+);
 $targets = ArrayHelper::map(Muscle::find()->groupBy(['group'])->all(), 'group', 'group');
 
 ?>
@@ -20,7 +24,17 @@ $targets = ArrayHelper::map(Muscle::find()->groupBy(['group'])->all(), 'group', 
 
     <?php $form = ActiveForm::begin(['options'=>['enctype'=>'multipart/form-data']]); ?>
 
-    <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'title')->widget(\yii\jui\AutoComplete::classname(), [
+        'clientOptions' => [
+            'minLength'=>0,
+            'source' => array_map(function($item){
+                return $item->title;
+            }, Exercise::find()->all()),
+        ],
+        'options'=>[
+            'class'=>'form-control'
+        ]
+    ]) ?>
 
     <?= $form->field($model, 'photo')->fileInput(); ?>
 
