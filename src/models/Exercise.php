@@ -42,7 +42,8 @@ class Exercise extends \yii\db\ActiveRecord
 			15=>"фитбол",
 			16=>"bodybar",
 			17=>"бассейн",
-			18=>"велосипед"
+			18=>"велосипед",
+            19=>"кроссовер",
 	];
 
 	const CAPACITIES = [
