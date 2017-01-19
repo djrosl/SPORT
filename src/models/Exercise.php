@@ -94,7 +94,7 @@ class Exercise extends \yii\db\ActiveRecord
             [['title'], 'required'],
             [['plane', 'type', 'head_down', 'axis_power', 'trauma', 'ccal', 'capacity'], 'integer'],
 						[['basic', 'stability', 'synergy'], 'safe'],
-            [['title','title_en', 'equipment', 'target'], 'string', 'max' => 255],
+            [['title','title_short','title_en', 'equipment', 'target'], 'string', 'max' => 255],
 						[['photo', 'video'], 'safe'],
         ];
     }
@@ -106,7 +106,8 @@ class Exercise extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'title' => 'Название',
+            'title' => 'Полное Название',
+            'title_short' => 'Краткое Название',
             'photo' => 'Фото',
             'video' => 'Видео',
             'equipment' => 'Оборудование',

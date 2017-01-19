@@ -36,6 +36,18 @@ $targets = ArrayHelper::map(Muscle::find()->groupBy(['group'])->all(), 'group', 
         ]
     ]) ?>
 
+    <?= $form->field($model, 'title_short')->widget(\yii\jui\AutoComplete::classname(), [
+        'clientOptions' => [
+            'minLength'=>0,
+            'source' => array_map(function($item){
+                return $item->title_short;
+            }, Exercise::find()->all()),
+        ],
+        'options'=>[
+            'class'=>'form-control'
+        ]
+    ]) ?>
+
     <?= $form->field($model, 'title_en')->widget(\yii\jui\AutoComplete::classname(), [
         'clientOptions' => [
             'minLength'=>0,
