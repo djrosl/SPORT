@@ -38,8 +38,12 @@ class GroupController extends AdminController
 				//->where("MATCH(title_en) AGAINST ('+".trim(implode(' +', $words))."' IN BOOLEAN MODE)")
                 //->orWhere(['like', 'title_en', $words[0]])
 
-            foreach($words as $word){
-                $rows->orWhere(['like', 'title_en', $word]);
+            foreach($words as $k => $word){
+                if(!$k) {
+                    $rows->where(['like', 'title_en', $word]);
+                } else {
+                    $rows->orWhere(['like', 'title_en', $word]);
+                }
             }
 
 
