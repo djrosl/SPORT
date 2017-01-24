@@ -67,7 +67,7 @@ class Product extends ActiveRecord
     }
 
     public function getSame(){
-        $words = explode(',', strtolower(str_replace(' ', '', $this->title_en)));
+        $words = explode(',', strtolower(str_replace(' ', '', str_replace('&', ' ', $this->title_en))));
         $rows = (new \yii\db\Query())
             ->select(['id'])
             ->from('product')
@@ -109,7 +109,7 @@ class Product extends ActiveRecord
 		return array_slice($rows->all(),0,20);
 	}*/
 	public function getSameOne(){
-		$words = explode(',', strtolower(str_replace(' ', '', $this->title_en)));
+		$words = explode(',', strtolower(str_replace(' ', '', str_replace('&', ' ', $this->title_en))));
 		$words2 = array_unique(explode(' ', strtolower(str_replace(',', '', $this->title_en))));
 		$newarr = array_unique(array_merge($words, $words2));
 		$words = array_filter($newarr, function($value) { return $value !== ''; });
