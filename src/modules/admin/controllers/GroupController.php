@@ -47,8 +47,7 @@ class GroupController extends AdminController
             }
 
 
-                $rows->andWhere(['in_group'=>0])
-				->all();
+                $rows->andWhere(['in_group'=>0]);
 
 		    $exist = [];
             if($group){
@@ -59,7 +58,7 @@ class GroupController extends AdminController
 
 			return $this->render('index', [
 			    'exist'=>$exist,
-                'models' => $rows,
+                'models' => $rows->all(),
 				'search'=>$search,
                 'title'=>$title
 			]);
