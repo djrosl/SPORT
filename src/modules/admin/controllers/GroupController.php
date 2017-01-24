@@ -30,7 +30,7 @@ class GroupController extends AdminController
 		    $title = ProductGroup::findOne(['id'=>$group])->title;
         }
 
-		$words = explode(' ', $search);
+		$words = explode(' ', str_replace('&', ' ', $search));
 		if($search){
 		    $rows = (new \yii\db\Query())
 				->select(['id','title_en','ndb_slug'])
