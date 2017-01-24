@@ -67,7 +67,7 @@ class Product extends ActiveRecord
     }
 
     public function getSame(){
-        $words = explode(',', strtolower(str_replace(' ', '', str_replace('&', ' ', $this->title_en))));
+        $words = explode(',', strtolower(str_replace(' ', '', preg_replace('/[^A-Za-z0-9\-]/', ' ', $this->title_en))));
         $rows = (new \yii\db\Query())
             ->select(['id'])
             ->from('product')
