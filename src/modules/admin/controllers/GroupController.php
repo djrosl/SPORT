@@ -34,10 +34,16 @@ class GroupController extends AdminController
 		if($search){
 		    $rows = (new \yii\db\Query())
 				->select(['id','title_en','ndb_slug'])
-				->from('product')
-				->where("MATCH(title_en) AGAINST ('+".trim(implode(' +', $words))."' IN BOOLEAN MODE)")
-                ->orWhere(['like', 'title_en', $words[0]])
-                ->andWhere(['in_group'=>0])
+				->from('product');
+				//->where("MATCH(title_en) AGAINST ('+".trim(implode(' +', $words))."' IN BOOLEAN MODE)")
+                //->orWhere(['like', 'title_en', $words[0]])
+
+            foreach($words as $word){
+                $rows->orWhere(['like', 'title_en', $word]);
+            }
+
+
+                $rows->andWhere(['in_group'=>0])
 				->all();
 
 		    $exist = [];
