@@ -118,7 +118,8 @@ class GroupController extends AdminController
 
 	}
 
-	public function actionView($id){
+	public function actionView($id, $search = ''){
+
 		if($id){
 		    $post = \Yii::$app->request->post();
 		    if($post){
@@ -142,7 +143,8 @@ class GroupController extends AdminController
 			}
 
 			return $this->render('view', [
-					'group'=>$group
+					'group'=>$group,
+                    'search'=>$search
 			]);
 		}
 

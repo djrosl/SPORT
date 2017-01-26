@@ -48,4 +48,10 @@ class ProductToGroup extends \yii\db\ActiveRecord
     			'id'=>'product_id'
 			]);
 		}
+
+    public function getGroup(){
+        return $this->hasOne(ProductGroup::className(), [
+            'id'=>'group_id'
+        ]);
+    }
 }

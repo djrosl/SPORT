@@ -129,6 +129,12 @@ class Product extends ActiveRecord
 
 		return array_slice($rows->all(),0,20);
 	}
+
+	public function getGroup(){
+        return $this->hasOne(ProductToGroup::className(),[
+            'group_id'=>'id'
+        ]);
+    }
 }
 
 
