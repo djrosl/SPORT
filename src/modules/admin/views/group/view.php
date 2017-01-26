@@ -67,7 +67,7 @@ $this->title = $group->title;
                     ['class' => 'yii\grid\CheckboxColumn'],
 
                     'product.title_en',
-                    'product.ndb_id',
+                    'product.ndb_slug',
 
                     [
                         'label'=>'Нутриенты',

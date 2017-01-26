@@ -37,7 +37,7 @@ class Product extends ActiveRecord
     {
         return [
             [['category_id', 'diet_type_id'], 'integer'],
-            [['ndb_id', 'description_short', 'description_full'], 'string'],
+            [['ndb_id', 'ndb_slug', 'description_short', 'description_full'], 'string'],
             [['slug', 'title_en', 'title_ru', 'image'], 'string', 'max' => 255],
             [['nutrients'], 'safe'],
         ];
