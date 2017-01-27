@@ -34,7 +34,7 @@
 
     setTimeout(function(){
         $('.nav.submenu.collapse').removeClass('collapse')
-    }, 500)
+    }, 100)
 })($);
 
 
