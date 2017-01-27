@@ -31,6 +31,8 @@
             $(that).hide();
         });
     });
+
+    $('.nav.submenu.collapse').removeClass('collapse')
 })($);
 
 
