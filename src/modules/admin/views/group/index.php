@@ -78,18 +78,7 @@ $this->title = 'Поиск / добавление в группу'; ?>
           </div>
       </div>
         <?php ActiveForm::end(); ?>
-		<?php endif; if(!empty($groups)): ?>
-        <table class="table table-bordered">
-            <tbody>
-            <?php foreach($groups as $group): ?>
-            <tr>
-                <td><a href="<?=Url::to(['group/view', 'id'=>$group->id])?>"><?=$group->title?></a></td>
-                <td><?=$group->getProducts()->count()?></td>
-            </tr>
-            <?php endforeach; ?>
-            </tbody>
-        </table>
-        <?php endif; ?>
+		<?php endif; ?>
 
 
     <?php
