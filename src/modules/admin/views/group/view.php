@@ -145,7 +145,7 @@ $this->title = $group->title;
         <?=GridView::widget([
             'dataProvider'=>$anotherDataProvider,
             'columns'=>[
-                /*['class' => 'yii\grid\CheckboxColumn'],*/
+                ['class' => 'yii\grid\CheckboxColumn'],
 
                 'product.title_en',
                 'group.title',
@@ -161,6 +161,20 @@ $this->title = $group->title;
                 ],
             ]
         ])?>
+
+    <div class="bottom row">
+        <div class="col-md-3">
+            <?=Html::dropDownList('action', 0, ['move'=>'Переместить', 'delete'=>"Удалить"], ['class'=>'form-control'])?>
+        </div>
+        <div class="col-md-3">
+            <?=Html::dropDownList('group', 0,
+                ArrayHelper::map(ProductGroup::find()->all(), 'id', 'title')
+                , ['class'=>'form-control'])?>
+        </div>
+        <div class="col-md-3">
+            <?=Html::submitButton('OK', ['class'=>'btn btn-success'])?>
+        </div>
+    </div>
 
         <?php ActiveForm::end(); ?>
 <?php endif; ?>
