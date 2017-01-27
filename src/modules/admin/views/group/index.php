@@ -6,7 +6,10 @@
  * Time: 7:32
  */
 
+use app\models\ProductGroup;
 use app\modules\admin\assets\AdminAsset;
+use yii\data\ActiveDataProvider;
+use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
@@ -87,6 +90,37 @@ $this->title = 'Поиск / добавление в группу'; ?>
             </tbody>
         </table>
         <?php endif; ?>
+
+
+    <?php
+    $dataProvider = new ActiveDataProvider([
+        'query' => ProductGroup::find(),
+        'pagination' => [
+            'pageSize' => 100,
+        ],
+    ]); ?>
+    <?=GridView::widget([
+        'dataProvider'=>$dataProvider,
+        'columns'=>[
+            'title',
+            [
+                'label'=>'Ссылка',
+                'format'=>'html',
+                'value'=>function($group){
+                    //var_dump($item->product->id);die;
+                    return Html::a('Перейти', Url::to(['group/view', 'id'=>$group->id]));
+                }
+            ],
+            [
+                'label'=>'Количество',
+                'format'=>'html',
+                'value'=>function($group){
+                    //var_dump($item->product->id);die;
+                    return Html::tag('span', $group->getProducts()->count());
+                }
+            ],
+        ]
+    ])?>
 
 
 
