@@ -75,7 +75,7 @@ $this->title = 'Поиск / добавление в группу'; ?>
           </div>
       </div>
         <?php ActiveForm::end(); ?>
-		<?php else: ?>
+		<?php endif; if(!empty($groups)): ?>
         <table class="table table-bordered">
             <tbody>
             <?php foreach($groups as $group): ?>
