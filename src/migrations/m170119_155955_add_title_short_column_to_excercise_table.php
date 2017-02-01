@@ -12,7 +12,7 @@ class m170119_155955_add_title_short_column_to_excercise_table extends Migration
      */
     public function up()
     {
-        $this->addColumn('excercise', 'title_short', $this->string());
+        $this->addColumn('exercise', 'title_short', $this->string());
     }
 
     /**
@@ -20,6 +20,6 @@ class m170119_155955_add_title_short_column_to_excercise_table extends Migration
      */
     public function down()
     {
-        $this->dropColumn('excercise', 'title_short');
+        $this->dropColumn('exercise', 'title_short');
     }
 }

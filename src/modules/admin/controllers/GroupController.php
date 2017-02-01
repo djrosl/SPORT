@@ -46,8 +46,14 @@ class GroupController extends AdminController
                 }
             }
 
+                $groupModels = clone $rows;
+
 
                 $rows->andWhere(['in_group'=>0]);
+
+                $groupModels->andWhere(['in_group'=>1]);
+
+                //var_dump($groupModels->all());die;
 
 		    $exist = [];
             if($group){
@@ -59,6 +65,7 @@ class GroupController extends AdminController
 			return $this->render('index', [
 			    'exist'=>$exist,
                 'models' => $rows->all(),
+                'groupModels' => $groupModels->all(),
 				'search'=>$search,
                 'title'=>$title
 			]);
@@ -176,6 +183,27 @@ class GroupController extends AdminController
         $prod->product->save();
         $prod->delete();
         return $this->redirect(Url::to(['/admin/group/view', 'id'=>$group]));
+    }
+
+    public function actionSub($id){
+        $group = ProductGroup::findOne(['id'=>$id]);
+
+        if(\Yii::$app->request->post('sub')){
+            $arr = \Yii::$app->request->post('sub')['title'];
+
+            ProductGroup::deleteAll("parent_id = {$group->id}");
+
+            foreach($arr as $child) {
+                $model = new ProductGroup();
+                $model->parent_id = $group->id;
+                $model->title = $child;
+                $model->save();
+            }
+        }
+
+        //var_dump(\Yii::$app->request->post('sub')['title']);die;
+
+        return $this->render('sub', compact('group'));
     }
 
 }

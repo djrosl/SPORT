@@ -7,6 +7,7 @@
  */
 
 use app\models\ProductGroup;
+use app\models\ProductToGroup;
 use app\modules\admin\assets\AdminAsset;
 use yii\data\ActiveDataProvider;
 use yii\grid\GridView;
@@ -112,6 +113,32 @@ $this->title = 'Поиск / добавление в группу'; ?>
     ])?>
 
 
+    <?php if(!empty($groupModels)): ?>
+    <h2>Поиск по группам</h2>
+    <div class="row">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <td>Название</td>
+                <td>Группа</td>
+                <td>База</td>
+            </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+            <tbody>
+            <?php foreach($groupModels as $model): ?>
+                <tr>
+                    <td><label for="p<?= $model['id'] ?>"><?=$model['title_en']?></label></td>
+                    <td><a href="<?= Url::to(['view', 'id'=>ProductToGroup::findOne(['product_id'=>$model['id']])->group->id]) ?>"><?=ProductToGroup::findOne(['product_id'=>$model['id']])->group->title?></a></td>
+                    <td><?=$model['ndb_slug']?></td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+    <?php endif; ?>
 
 
 </div>

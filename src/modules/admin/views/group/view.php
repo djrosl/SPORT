@@ -16,6 +16,9 @@ use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
 $this->title = $group->title;
+
+$array = ArrayHelper::map( ProductGroup::find()->all(), 'id', 'title');
+
 ?>
 
 <div class="admin-index">
@@ -41,6 +44,10 @@ $this->title = $group->title;
 
         <div class="col-lg-12">
             <div class="text-right">
+                <?=Html::a('Подгруппы', Url::to(['sub', 'id'=>$group->id]))?>
+                &nbsp;
+                &nbsp;
+                &nbsp;
                 <?=Html::a('Добавить продукты', Url::to(['index', 'group'=>$group->id]))?>
                 &nbsp;
                 &nbsp;
@@ -168,7 +175,7 @@ $this->title = $group->title;
         </div>
         <div class="col-md-3">
             <?=Html::dropDownList('group', 0,
-                ArrayHelper::map(ProductGroup::find()->all(), 'id', 'title')
+                $array
                 , ['class'=>'form-control'])?>
         </div>
         <div class="col-md-3">
@@ -178,6 +185,8 @@ $this->title = $group->title;
 
         <?php ActiveForm::end(); ?>
 <?php endif; ?>
+
+
 
 	</div>
 	<!-- /.row -->

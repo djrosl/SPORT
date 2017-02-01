@@ -27,6 +27,7 @@ class ProductGroup extends \yii\db\ActiveRecord
     {
         return [
             [['title', 'state'], 'string', 'max' => 255],
+            [['parent_id'], 'integer']
         ];
     }
 
@@ -46,4 +47,16 @@ class ProductGroup extends \yii\db\ActiveRecord
     			'group_id'=>'id'
 			])->joinWith('product')->orderBy(['product.title_en'=>SORT_ASC]);
 		}
+
+    public function getChildren(){
+        return $this->hasMany(ProductGroup::className(),[
+            'parent_id'=>'id'
+        ]);
+    }
+
+    public function getParent(){
+        return $this->hasOne(ProductGroup::className(), [
+            'parent_id'=>'id'
+        ]);
+    }
 }
