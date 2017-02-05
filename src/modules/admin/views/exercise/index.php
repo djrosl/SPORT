@@ -30,7 +30,7 @@ $post = Yii::$app->request->post();
 
 if(!empty($post['is_filter'])):
 
-    $query = Exercise::find()->orderBy('title_ru');
+    $query = Exercise::find()->orderBy('title');
     unset($post['_csrf']);
     unset($post['is_filter']);
     foreach($post as $k=>$filter){
