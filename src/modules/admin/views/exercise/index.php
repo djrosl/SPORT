@@ -26,15 +26,14 @@ $muscles = ArrayHelper::merge(
 );
 
 
-$get = Yii::$app->request->get();
+$post = Yii::$app->request->post();
 
-if(!empty($get['is_filter'])):
+if(!empty($post['is_filter'])):
 
-    $query = Exercise::find();
-    unset($get['is_filter']);
-    unset($get['ExerciseSearch']);
-    unset($get['page']);
-    foreach($get as $k=>$filter){
+    $query = Exercise::find()->orderBy('title_ru');
+    unset($post['_csrf']);
+    unset($post['is_filter']);
+    foreach($post as $k=>$filter){
         if($filter){
             if($k == 'muscle'){
                 $query->joinWith('basic')->andWhere(['in', 'muscle_exercise_basic.muscle_id', $filter]);
@@ -62,20 +61,19 @@ endif;
         <?= Html::a('Create Exercise', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?php ActiveForm::begin([
-            'method'=>'GET'
-    ]); ?>
+    <?php ActiveForm::begin([]); ?>
     <div class="form-group">
-    <?=Html::dropDownList('target', 0, $targets,['class'=>'form-control','prompt'=>'Выбрать'])?>
+    <?=Html::dropDownList('target', $post['target'] ? $post['target'] : null, $targets,['class'=>'form-control','prompt'=>'Выбрать'])?>
     </div>
     <input type="hidden" name="is_filter" value="true">
     <div class="form-group">
-    <?=Html::dropDownList('equipment', null, Exercise::EQUIPMENT, ['class'=>'form-control','prompt'=>'Выбрать'])?>
+    <?=Html::dropDownList('equipment', $post['equipment'] ? $post['equipment'] : null, Exercise::EQUIPMENT, ['class'=>'form-control','prompt'=>'Выбрать'])?>
     </div>
     <div class="form-group">
     <?=Select2::widget([
         'data'=>$muscles,
         'name'=>'muscle',
+        'value'=>!empty($post['muscle']) ? $post['muscle'] : [],
         'options' => [
             'placeholder' => 'Выбрать',
             'multiple'=>true
@@ -84,24 +82,24 @@ endif;
     </div>
 
     <div class="form-group">
-        <?=Html::dropDownList('type', 0, [
+        <?=Html::dropDownList('type', $post['type'] ? $post['type'] : null, [
             Exercise::TYPE_BASE=>'Односуставное',
             Exercise::TYPE_ISOLATE=>'Многосуставное',
         ], ['class'=>'form-control','prompt'=>'Выбрать'])?>
     </div>
 
     <div class="form-group">
-        <?=Html::dropDownList('capacity', null, Exercise::CAPACITIES, ['class'=>'form-control','prompt'=>'Выбрать'])?>
+        <?=Html::dropDownList('capacity', $post['capacity'] ? $post['capacity'] : null, Exercise::CAPACITIES, ['class'=>'form-control','prompt'=>'Выбрать'])?>
     </div>
 
     <div class="form-group">
-        <?=Html::checkbox('head_down',false, [])?> Голова ниже корпуса
+        <?=Html::checkbox('head_down',!empty($post['head_down']) ? $post['head_down'] : null, [])?> Голова ниже корпуса
     </div>
     <div class="form-group">
-        <?=Html::checkbox('axis_power',false, [])?> Осевая нагрузка
+        <?=Html::checkbox('axis_power',!empty($post['axis_power']) ? $post['axis_power'] : null, [])?> Осевая нагрузка
     </div>
     <div class="form-group">
-        <?=Html::checkbox('trauma',false, [])?> Повышенная травмоопасность
+        <?=Html::checkbox('trauma',!empty($post['trauma']) ? $post['trauma'] : null, [])?> Повышенная травмоопасность
     </div>
 
     <div class="form-group text-right">
