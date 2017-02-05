@@ -28,7 +28,7 @@ $muscles = ArrayHelper::merge(
 
 $get = Yii::$app->request->get();
 
-if($get['type']):
+if(!empty($get['type'])):
 
     $query = Exercise::find();
 
