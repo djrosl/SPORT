@@ -33,6 +33,7 @@ if(!empty($get['is_filter'])):
     $query = Exercise::find();
     unset($get['is_filter']);
     unset($get['ExerciseSearch']);
+    unset($get['page']);
     foreach($get as $k=>$filter){
         if($filter){
             if($k == 'muscle'){
