@@ -28,15 +28,17 @@ $muscles = ArrayHelper::merge(
 
 $get = Yii::$app->request->get();
 
-if(!empty($get['type'])):
+if(!empty($get['is_filter'])):
 
     $query = Exercise::find();
-
+    unset($get['is_filter']);
     foreach($get as $k=>$filter){
-        if($k == 'muscle'){
-            $query->joinWith('basic')->andWhere(['in', 'muscle_exercise_basic.id', $filter]);
-        } else {
-            $query->andWhere(['exercise.'.$k=>$filter]);
+        if($filter){
+            if($k == 'muscle'){
+                $query->joinWith('basic')->andWhere(['in', 'muscle_exercise_basic.muscle_id', $filter]);
+            } else {
+                $query->andWhere(['exercise.'.$k=>$filter]);
+            }
         }
     }
 
@@ -62,10 +64,11 @@ endif;
             'method'=>'GET'
     ]); ?>
     <div class="form-group">
-    <?=Html::dropDownList('target', null, $targets,['class'=>'form-control'])?>
+    <?=Html::dropDownList('target', 0, $targets,['class'=>'form-control','prompt'=>'Выбрать'])?>
     </div>
+    <input type="hidden" name="is_filter" value="true">
     <div class="form-group">
-    <?=Html::dropDownList('equipment', null, Exercise::EQUIPMENT, ['class'=>'form-control'])?>
+    <?=Html::dropDownList('equipment', null, Exercise::EQUIPMENT, ['class'=>'form-control','prompt'=>'Выбрать'])?>
     </div>
     <div class="form-group">
     <?=Select2::widget([
@@ -79,14 +82,14 @@ endif;
     </div>
 
     <div class="form-group">
-        <?=Html::dropDownList('type', null, [
+        <?=Html::dropDownList('type', 0, [
             Exercise::TYPE_BASE=>'Односуставное',
             Exercise::TYPE_ISOLATE=>'Многосуставное',
-        ], ['class'=>'form-control'])?>
+        ], ['class'=>'form-control','prompt'=>'Выбрать'])?>
     </div>
 
     <div class="form-group">
-        <?=Html::dropDownList('capacity', null, Exercise::CAPACITIES, ['class'=>'form-control'])?>
+        <?=Html::dropDownList('capacity', null, Exercise::CAPACITIES, ['class'=>'form-control','prompt'=>'Выбрать'])?>
     </div>
 
     <div class="form-group">
@@ -100,7 +103,7 @@ endif;
     </div>
 
     <div class="form-group text-right">
-        <a href="<?=Url::to('exercise/index')?>" class="btn btn-danger">Очистить</a>
+        <a href="<?=Url::to(['exercise/index'])?>" class="btn btn-danger">Очистить</a>
         <button class="btn btn-success">Фильтр</button>
     </div>
 
