@@ -64,6 +64,8 @@ $targets = ArrayHelper::map(Muscle::find()->groupBy(['group'])->all(), 'group', 
 
     <?= $form->field($model, 'video')->fileInput(); ?>
 
+    <?= $model->video ? Html::tag('video', '', ['src'=>$model->video, 'width'=>'300']) : ''; ?>
+
 	<?= $form->field($model, 'target')->widget(Select2::className(), [
 				'data' => $targets,
 				'options' => [

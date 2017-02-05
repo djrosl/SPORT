@@ -156,4 +156,12 @@ class Exercise extends \yii\db\ActiveRecord
 				'exercise_id'=>'id'
 		]);
 	}
+
+	public function getCapacityName(){
+	    return $this::CAPACITIES[(int)$this->capacity];
+    }
+
+    public function getEquipName(){
+        return $this::EQUIPMENT[(int)$this->equipment];
+    }
 }

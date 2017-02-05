@@ -1,7 +1,15 @@
 <?php
 
+use app\components\ArrayHelper;
+use app\models\Exercise;
+use app\models\Muscle;
+use app\models\ProductGroup;
+use kartik\select2\Select2;
+use yii\bootstrap\ActiveForm;
+use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\Url;
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $searchModel app\modules\admin\models\ExerciseSearch */
@@ -9,6 +17,36 @@ use yii\widgets\Pjax;
 
 $this->title = 'Exercises';
 $this->params['breadcrumbs'][] = $this->title;
+
+$targets = ArrayHelper::map(Muscle::find()->groupBy(['group'])->all(), 'group', 'group');
+
+$muscles = ArrayHelper::merge(
+    ArrayHelper::map(Muscle::find()->all(), 'id', 'title_ru'),
+    ArrayHelper::map(Muscle::find()->all(), 'id', 'title_lat')
+);
+
+
+$get = Yii::$app->request->get();
+
+if($get):
+
+    $query = Exercise::find();
+
+    foreach($get as $k=>$filter){
+        if($k == 'muscle'){
+            $query->joinWith('basic')->andWhere(['in', 'muscle_exercise_basic.id', $filter]);
+        } else {
+            $query->andWhere(['exercise.'.$k=>$filter]);
+        }
+    }
+
+    $dataProvider = new ActiveDataProvider([
+        'query' => $query,
+        'pagination' => [
+            'pageSize' => 100,
+        ],
+    ]);
+endif;
 ?>
 <div class="exercise-index">
 
@@ -20,17 +58,74 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Create Exercise', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
+    <?php ActiveForm::begin([
+            'method'=>'GET'
+    ]); ?>
+    <div class="form-group">
+    <?=Html::dropDownList('target', null, $targets,['class'=>'form-control'])?>
+    </div>
+    <div class="form-group">
+    <?=Html::dropDownList('equipment', null, Exercise::EQUIPMENT, ['class'=>'form-control'])?>
+    </div>
+    <div class="form-group">
+    <?=Select2::widget([
+        'data'=>$muscles,
+        'name'=>'muscle',
+        'options' => [
+            'placeholder' => 'Выбрать',
+            'multiple'=>true
+        ],
+    ])?>
+    </div>
+
+    <div class="form-group">
+        <?=Html::dropDownList('type', null, [
+            Exercise::TYPE_BASE=>'Односуставное',
+            Exercise::TYPE_ISOLATE=>'Многосуставное',
+        ], ['class'=>'form-control'])?>
+    </div>
+
+    <div class="form-group">
+        <?=Html::dropDownList('capacity', null, Exercise::CAPACITIES, ['class'=>'form-control'])?>
+    </div>
+
+    <div class="form-group">
+        <?=Html::checkbox('head_down',false, [])?> Голова ниже корпуса
+    </div>
+    <div class="form-group">
+        <?=Html::checkbox('axis_power',false, [])?> Осевая нагрузка
+    </div>
+    <div class="form-group">
+        <?=Html::checkbox('trauma',false, [])?> Повышенная травмоопасность
+    </div>
+
+    <div class="form-group text-right">
+        <a href="<?=Url::to('exercise/index')?>" class="btn btn-danger">Очистить</a>
+        <button class="btn btn-success">Фильтр</button>
+    </div>
+
+    <?php ActiveForm::end(); ?>
+
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
+
             'title',
-            'photo',
-            'video',
-            'equipment',
+            [
+                'attribute'=>'capacity',
+                'value'=>function($model){
+                    return $model->getCapacityName();
+                }
+            ],
+            [
+                'attribute'=>'equipment',
+                'value'=>function($model){
+                    return $model->getEquipName();
+                }
+            ],
             // 'plane',
             // 'type',
             // 'head_down',
