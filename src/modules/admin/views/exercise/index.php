@@ -63,11 +63,11 @@ endif;
 
     <?php ActiveForm::begin([]); ?>
     <div class="form-group">
-    <?=Html::dropDownList('target', $post['target'] ? $post['target'] : null, $targets,['class'=>'form-control','prompt'=>'Выбрать'])?>
+    <?=Html::dropDownList('target', !empty($post['target']) ? $post['target'] : null, $targets,['class'=>'form-control','prompt'=>'Выбрать'])?>
     </div>
     <input type="hidden" name="is_filter" value="true">
     <div class="form-group">
-    <?=Html::dropDownList('equipment', $post['equipment'] ? $post['equipment'] : null, Exercise::EQUIPMENT, ['class'=>'form-control','prompt'=>'Выбрать'])?>
+    <?=Html::dropDownList('equipment', !empty($post['equipment']) ? $post['equipment'] : null, Exercise::EQUIPMENT, ['class'=>'form-control','prompt'=>'Выбрать'])?>
     </div>
     <div class="form-group">
     <?=Select2::widget([
@@ -82,14 +82,14 @@ endif;
     </div>
 
     <div class="form-group">
-        <?=Html::dropDownList('type', $post['type'] ? $post['type'] : null, [
+        <?=Html::dropDownList('type', !empty($post['type']) ? $post['type'] : null, [
             Exercise::TYPE_BASE=>'Односуставное',
             Exercise::TYPE_ISOLATE=>'Многосуставное',
         ], ['class'=>'form-control','prompt'=>'Выбрать'])?>
     </div>
 
     <div class="form-group">
-        <?=Html::dropDownList('capacity', $post['capacity'] ? $post['capacity'] : null, Exercise::CAPACITIES, ['class'=>'form-control','prompt'=>'Выбрать'])?>
+        <?=Html::dropDownList('capacity', !empty($post['capacity']) ? $post['capacity'] : null, Exercise::CAPACITIES, ['class'=>'form-control','prompt'=>'Выбрать'])?>
     </div>
 
     <div class="form-group">
