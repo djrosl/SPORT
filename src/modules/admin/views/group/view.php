@@ -94,7 +94,6 @@ $array = ArrayHelper::map( ProductGroup::find()->all(), 'id', 'title');
             'pagination' => [
                 'pageSize' => 100,
             ],
-            'sort' => ['attributes' => ['product.ndb_slug']],
         ]); ?>
 
         <?php ActiveForm::begin([
@@ -107,14 +106,7 @@ $array = ArrayHelper::map( ProductGroup::find()->all(), 'id', 'title');
                     ['class' => 'yii\grid\CheckboxColumn'],
 
                     'product.title_en',
-                    //'product.ndb_slug',
-                    [
-                        'attribute' => 'product.ndb_slug',
-                        'value'=>function($model){
-                            return $model->product->ndb_slug;
-                        },
-                        'class' => 'yii\grid\DataColumn',
-                    ],
+                    'product.ndb_slug',
 
                     [
                         'label'=>'Нутриенты',
