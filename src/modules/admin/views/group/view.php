@@ -95,7 +95,7 @@ $array = ArrayHelper::map( ProductGroup::find()->all(), 'id', 'title');
                 'pageSize' => 100,
             ],
             'sort'=>[
-                'product.ndb_slug'=>[
+                'ndb_slug'=>[
                     'asc' => ['product.ndb_slug' => SORT_ASC],
                     'desc' => ['product.ndb_slug' => SORT_DESC],
                 ]
