@@ -87,6 +87,7 @@ $array = ArrayHelper::map( ProductGroup::find()->all(), 'id', 'title');
                 'pagination' => [
                     'pageSize' => 100,
                 ],
+                'sort' => ['attributes' => ['product.title_en']],
             ]);
         }
         $dataProvider = new ActiveDataProvider([
