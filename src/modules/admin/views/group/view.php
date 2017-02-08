@@ -110,6 +110,9 @@ $array = ArrayHelper::map( ProductGroup::find()->all(), 'id', 'title');
                     //'product.ndb_slug',
                     [
                         'attribute' => 'product.ndb_slug',
+                        'value'=>function($model){
+                            return $model->product->ndb_slug;
+                        },
                         'class' => 'yii\grid\DataColumn',
                     ],
 
