@@ -154,7 +154,10 @@ $array = ArrayHelper::map( ProductGroup::find()->all(), 'id', 'title');
             'columns'=>[
                 ['class' => 'yii\grid\CheckboxColumn'],
 
-                'product.title_en',
+                [
+                    'attribute' => 'product.title_en',
+                    'class' => 'yii\grid\DataColumn',
+                ],
                 'group.title',
                 'product.ndb_slug',
 
