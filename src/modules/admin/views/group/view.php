@@ -91,7 +91,7 @@ $array = ArrayHelper::map( ProductGroup::find()->all(), 'id', 'title');
         }
         if(Yii::$app->request->get('sort')){
             $sort = Yii::$app->request->get('sort');
-            $query->joinWith('product')->orderBy([new \yii\db\Expression('product.ndb_slug (id, aus,nuttab,cnf,usda)')]);
+            $query->joinWith('product')->orderBy([new \yii\db\Expression('FIELD (product.ndb_slug, "aus","nuttab","cnf","usda")')]);
         }
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
