@@ -131,7 +131,7 @@ $this->title = 'Поиск / добавление в группу'; ?>
             <?php foreach($groupModels as $model): ?>
                 <tr>
                     <td><label for="p<?= $model['id'] ?>"><?=$model['title_en']?></label></td>
-                    <td><?php if(ProductToGroup::findOne(['product_id'=>$model['id']])->group): ?><a href="<?= Url::to(['view', 'id'=>ProductToGroup::findOne(['product_id'=>$model['id']])->group->id]) ?>"><?=ProductToGroup::findOne(['product_id'=>$model['id']])->group->title?></a><?php endif; ?></td>
+                   <?php /*  <td><?php  if(ProductToGroup::findOne(['product_id'=>$model['id']])->group): ?><a href="<?= Url::to(['view', 'id'=>ProductToGroup::findOne(['product_id'=>$model['id']])->group->id]) ?>"><?=ProductToGroup::findOne(['product_id'=>$model['id']])->group->title?></a><?php endif; ?></td>  */ ?>
                     <td><?=$model['ndb_slug']?></td>
                 </tr>
             <?php endforeach; ?>
