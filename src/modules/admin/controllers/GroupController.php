@@ -188,17 +188,13 @@ class GroupController extends AdminController
     public function actionSub($id){
         $group = ProductGroup::findOne(['id'=>$id]);
 
-        if(\Yii::$app->request->post('sub')){
-            $arr = \Yii::$app->request->post('sub')['title'];
+        if(\Yii::$app->request->post('name')){
 
-            ProductGroup::deleteAll("parent_id = {$group->id}");
-
-            foreach($arr as $child) {
                 $model = new ProductGroup();
                 $model->parent_id = $group->id;
-                $model->title = $child;
+                $model->title = \Yii::$app->request->post('name');
                 $model->save();
-            }
+            return $this->redirect(['/admin/group/view', 'id'=>$group->id]);
         }
 
         //var_dump(\Yii::$app->request->post('sub')['title']);die;

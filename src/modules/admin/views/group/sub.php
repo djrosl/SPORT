@@ -27,16 +27,7 @@ $this->title = $group->title;
             <?=Html::a('Группа', Url::to(['view', 'id'=>$group->id]))?>
 
 <?php ActiveForm::begin();
-echo MultipleInput::widget([
-    'name'=>'sub',
-    'data'=>$group->children,
-    'columns'=>[
-        [
-            'name'=>'title',
-            'title'=>'Название',
-        ]
-    ]
-]);
+echo Html::textInput('name');
 echo Html::submitButton('Сохранить', [
         'class'=>'btn btn-success'
 ]);

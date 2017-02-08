@@ -44,7 +44,7 @@ $array = ArrayHelper::map( ProductGroup::find()->all(), 'id', 'title');
 
         <div class="col-lg-12">
             <div class="text-right">
-                <?=Html::a('Подгруппы', Url::to(['sub', 'id'=>$group->id]))?>
+                <?=Html::a('Добавить подгруппу', Url::to(['sub', 'id'=>$group->id]))?>
                 &nbsp;
                 &nbsp;
                 &nbsp;
