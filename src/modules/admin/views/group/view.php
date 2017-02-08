@@ -96,7 +96,7 @@ $array = ArrayHelper::map( ProductGroup::find()->all(), 'id', 'title');
             ],
             'sort'=>[
                 'attributes'=>[
-                    'ndb_slug'=>[
+                    'product.ndb_slug'=>[
                         'asc' => ['product.ndb_slug' => SORT_ASC],
                         'desc' => ['product.ndb_slug' => SORT_DESC],
                     ]
@@ -115,6 +115,9 @@ $array = ArrayHelper::map( ProductGroup::find()->all(), 'id', 'title');
 
                     'product.title_en',
                     'product.ndb_slug',
+                    /*[
+                            'attribute'=>'ndb_slug'
+                    ],*/
 
                     [
                         'label'=>'Нутриенты',
