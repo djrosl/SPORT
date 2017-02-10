@@ -139,6 +139,7 @@ class Product extends ActiveRecord
     public function getRelated(){
 	    return $this->hasMany(Product::className(), [
             'related_id'=>'id'
+
         ]);
     }
 }
