@@ -83,7 +83,7 @@ $array = ArrayHelper::map( ProductGroup::find()->all(), 'id', 'title');
             $another_query = ProductToGroup::find()->joinWith('product')->where(['like','title_en', $search])->andWhere(['!=','group_id',$group->id])->orderBy('group_id');
 
             $anotherDataProvider = new ActiveDataProvider([
-                'query' => $another_query,
+                'query' => $another_query->orderBy([new \yii\db\Expression('FIELD (product.ndb_slug, "aus","nuttab","cnf","usda")')])->addOrderBy('title_en ASC'),
                 'pagination' => [
                     'pageSize' => 100,
                 ],
@@ -91,7 +91,7 @@ $array = ArrayHelper::map( ProductGroup::find()->all(), 'id', 'title');
         }
         if(Yii::$app->request->get('sort')){
             $sort = Yii::$app->request->get('sort');
-            $query->joinWith('product')->orderBy([new \yii\db\Expression('FIELD (product.ndb_slug, "aus","nuttab","cnf","usda")')]);
+            $query->joinWith('product')->orderBy([new \yii\db\Expression('FIELD (product.ndb_slug, "aus","nuttab","cnf","usda")')])->addOrderBy('title_en ASC');
         }
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
