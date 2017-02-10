@@ -143,7 +143,7 @@ $array = ArrayHelper::map( ProductGroup::find()->all(), 'id', 'title');
 
             <div class="bottom row">
                 <div class="col-md-3">
-                    <?=Html::dropDownList('action', 0, ['move'=>'Переместить', 'delete'=>"Удалить"], ['class'=>'form-control'])?>
+                    <?=Html::dropDownList('action', 0, ['move'=>'Переместить', 'delete'=>"Удалить", 'related'=>"Объеденить"], ['class'=>'form-control'])?>
                 </div>
                 <div class="col-md-3">
                     <?=Html::dropDownList('group', 0,
@@ -186,7 +186,7 @@ $array = ArrayHelper::map( ProductGroup::find()->all(), 'id', 'title');
 
     <div class="bottom row">
         <div class="col-md-3">
-            <?=Html::dropDownList('action', 0, ['move'=>'Переместить', 'delete'=>"Удалить"], ['class'=>'form-control'])?>
+            <?=Html::dropDownList('action', 0, ['move'=>'Переместить', 'delete'=>"Удалить", 'related'=>"Объеденить"], ['class'=>'form-control'])?>
         </div>
         <div class="col-md-3">
             <?=Html::dropDownList('group', 0,

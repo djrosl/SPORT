@@ -45,7 +45,7 @@ class ProductSearch extends Product
 
         // add conditions that should always apply here
 
-        $query->where(['in_group'=>0]);
+        $query->where(['ndb_slug'=>'aus'])->orWhere(['ndb_slug'=>'cnf'])->andWhere(['related_id'=>0]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

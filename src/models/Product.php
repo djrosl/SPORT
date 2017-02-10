@@ -36,7 +36,7 @@ class Product extends ActiveRecord
     public function rules()
     {
         return [
-            [['category_id', 'diet_type_id'], 'integer'],
+            [['category_id', 'diet_type_id', 'related_id'], 'integer'],
             [['ndb_id', 'ndb_slug', 'description_short', 'description_full'], 'string'],
             [['slug', 'title_en', 'title_ru', 'image'], 'string', 'max' => 255],
             [['nutrients'], 'safe'],
@@ -133,6 +133,12 @@ class Product extends ActiveRecord
 	public function getGroup(){
         return $this->hasOne(ProductToGroup::className(),[
             'group_id'=>'id'
+        ]);
+    }
+
+    public function getRelated(){
+	    return $this->hasMany(Product::className(), [
+            'related_id'=>'id'
         ]);
     }
 }

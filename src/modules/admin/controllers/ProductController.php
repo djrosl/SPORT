@@ -45,13 +45,9 @@ class ProductController extends AdminController
     }
 
     public function actionGroup($id, $one = false){
-        $ids = $one ? Product::findOne(['id'=>$id])->getSameOne() : Product::findOne(['id'=>$id])->getSame();
-				//$idsOne = Product::findOne(['id'=>$id])->getSameOne('id');
-        $models = Product::find()->where(['in','id',$ids])->all();
 
         return $this->render('group', [
-        		'model'=>Product::findOne(['id'=>$id]),
-            'models'=>$models
+            'model'=>Product::findOne(['id'=>$id])
         ]);
     }
 

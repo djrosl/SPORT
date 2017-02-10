@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
 							],
 					]) ?>
 
-                <?php foreach($models as $model): ?>
+                <?php foreach($model->related as $model): ?>
             <div class="col-md-6">
                     <h3><?=$model->title_en?> (<?=$model->ndb_slug?>)</h3>
                     <div style="height: 400px;overflow-y:scroll">

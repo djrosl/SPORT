@@ -38,17 +38,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'group',
                 'format' => 'raw',
                 'value' => function ($model) {
-                    return Html::a('Группа: '.count($model->getSame()), ['product/group?id='.$model->id]);
+                    return Html::a('Группа: '.count($model->related), ['product/group?id='.$model->id]);
                 },
             ],
-						[
-								'attribute' => 'group_one',
-								'format' => 'raw',
-								'value' => function ($model) {
-        $count = count($model->getSameOne()) > 20 ? '>'.count($model->getSameOne()) : count($model->getSameOne());
-									return Html::a('Группа (без одного слова): '.$count, ['product/group?one=1&id='.$model->id]);
-								},
-						],
             // 'image',
             // 'description_short:ntext',
             // 'description_full:ntext',
