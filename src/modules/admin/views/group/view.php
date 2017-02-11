@@ -120,7 +120,8 @@ $array = ArrayHelper::map( ProductGroup::find()->all(), 'id', 'title');
                     [
                         'label'=>'product.title_en',
                         'value'=>function($model){
-                            return is_null($model->product->related_id) ? $model->product->title_en : $model->product->title_en.' [группа]';
+
+                            return is_null($model->related_id) ? $model->title_en : $model->title_en.' [группа]';
                         }
                     ],
                     'product.ndb_slug',
