@@ -79,7 +79,7 @@ $array = ArrayHelper::map( ProductGroup::find()->all(), 'id', 'title');
             $query = $group->getProducts();
             $anotherDataProvider = false;
         } else {
-            $query = $group->getProducts()->where(['like','title_en', $search]);
+            $query = $group->getProducts()->where(['like','title_en', $search])->andWhere(['in','related_id',[NULL, 0]]);
             $another_query = ProductToGroup::find()->joinWith('product')->where(['like','title_en', $search])->andWhere(['!=','group_id',$group->id])->orderBy('group_id');
 
             $anotherDataProvider = new ActiveDataProvider([
@@ -117,7 +117,12 @@ $array = ArrayHelper::map( ProductGroup::find()->all(), 'id', 'title');
                 'columns'=>[
                     ['class' => 'yii\grid\CheckboxColumn'],
 
-                    'product.title_en',
+                    [
+                        'label'=>'product.title_en',
+                        'value'=>function($model){
+                            return is_null($model->product->related_id) ? $model->product->title_en : $model->product->title_en.' [группа]';
+                        }
+                    ],
                     'product.ndb_slug',
                     /*[
                             'attribute'=>'ndb_slug'
