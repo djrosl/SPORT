@@ -1,5 +1,6 @@
 <?php
 
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -32,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
 							],
 					]) ?>
 
-                <?php foreach($model->related as $model): ?>
+                <?php foreach(ArrayHelper::merge($model->related, [$model]) as $model): ?>
             <div class="col-md-6">
                     <h3><?=$model->title_en?> (<?=$model->ndb_slug?>)</h3>
                     <div style="height: 400px;overflow-y:scroll">

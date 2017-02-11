@@ -146,14 +146,16 @@ class GroupController extends AdminController
                     $items = ProductToGroup::find()->where(['in', 'id', $post['selection']])->all();
                     $main = ProductToGroup::find()->joinWith('product')->where(['in', 'product_to_group.id', $post['selection']])
                         ->andWhere(['in', 'product.ndb_slug', ['cnf', 'aus']])->one();
+                    if($main){
+                    } else {
+                        $main = $items[0];
+                    }
                     $main->product->related_id = 0;
                     $main->product->save();
-                    if($main){
-                        foreach ($items as $item){
-                            if($item->product->id !== $main->product->id){
-                                $item->product->related_id = $main->product->id;
-                                $item->product->save();
-                            }
+                    foreach ($items as $item){
+                        if($item->product->id !== $main->product->id){
+                            $item->product->related_id = $main->product->id;
+                            $item->product->save();
                         }
                     }
                 }
