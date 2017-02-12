@@ -135,8 +135,11 @@ $array = ArrayHelper::map( ProductGroup::find()->all(), 'id', 'title');
                         'label'=>'Нутриенты',
                         'format'=>'html',
                         'value'=>function($item){
+                            if($item->product):
                             //var_dump($item->product->id);die;
                             return Html::a('Показать нутриенты', '', ['title'=>$item->product->id, 'class'=>'text-info show-nutrients']);
+                            endif;
+                            return '';
                         }
                     ],
                     [
