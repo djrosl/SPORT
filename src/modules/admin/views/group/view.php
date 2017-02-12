@@ -76,10 +76,10 @@ $array = ArrayHelper::map( ProductGroup::find()->all(), 'id', 'title');
 
         <?php
         if(!$search) {
-            $query = $group->getProducts()->andWhere(['in','related_id',[NULL, 0]]);;
+            $query = $group->getProducts()->andWhere(['is','related_id',NULL])->orWhere(['related_id'=>0]);
             $anotherDataProvider = false;
         } else {
-            $query = $group->getProducts()->where(['like','title_en', $search])->andWhere(['in','related_id',[NULL, 0]]);
+            $query = $group->getProducts()->where(['like','title_en', $search])->andWhere(['is','related_id',NULL])->orWhere(['related_id'=>0]);
 
             $another_query = ProductToGroup::find()->joinWith('product')->where(['like','title_en', $search])->andWhere(['!=','group_id',$group->id])->orderBy('group_id');
 
