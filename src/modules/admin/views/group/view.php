@@ -118,6 +118,7 @@ $array = ArrayHelper::map( ProductGroup::find()->all(), 'id', 'title'); ?>
 
                     [
                         'label'=>'product.title_en',
+                        'format'=>'html',
                         'value'=>function($model){
                             if($model->product):
                             return is_null($model->product->related_id) ? $model->product->title_en :
