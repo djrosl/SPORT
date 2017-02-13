@@ -76,7 +76,7 @@ $array = ArrayHelper::map( ProductGroup::find()->all(), 'id', 'title');
 
         <?php
         if(!$search) {
-            $query = $group->getProducts()->andFilterWhere(['or',['is','related_id',NULL],['related_id'=>0]]);
+            $query = $group->getProducts()->andFilterWhere(['or',['is','related_id',NULL],['=','related_id',0]]);
             $anotherDataProvider = false;
         } else {
             $query = $group->getProducts()->where(['like','title_en', $search])->andFilterWhere(['or',['is','related_id',NULL],['related_id'=>0]]);
