@@ -9,7 +9,6 @@ use app\models\Product;
 use app\models\ProductGroup;
 use app\models\ProductToGroup;
 use yii\data\ActiveDataProvider;
-use yii\db\Expression;
 use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -77,7 +76,7 @@ $array = ArrayHelper::map( ProductGroup::find()->all(), 'id', 'title');
 
         <?php
         if(!$search) {
-            $query = $group->getProducts()->andFilterWhere(['or',[new Expression('related_id is NULL')],['=','related_id',0]]);
+            $query = $group->getProducts()->andFilterWhere(['or','related_id is NULL',['=','related_id',0]]);
             $anotherDataProvider = false;
         } else {
             $query = $group->getProducts()->where(['like','title_en', $search])->andFilterWhere(['or',['is','related_id',NULL],['=','related_id',0]]);
