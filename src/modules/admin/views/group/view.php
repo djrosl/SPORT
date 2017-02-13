@@ -120,7 +120,8 @@ $array = ArrayHelper::map( ProductGroup::find()->all(), 'id', 'title'); ?>
                         'label'=>'product.title_en',
                         'value'=>function($model){
                             if($model->product):
-                            return is_null($model->product->related_id) ? $model->product->title_en : $model->product->title_en.' [группа]';
+                            return is_null($model->product->related_id) ? $model->product->title_en :
+                                $model->product->title_en.' ['.Html::a('группа', Url::to(['/admin/product/group', 'id'=>$model->product->id])).']';
                             endif;
                             return '';
                         }

@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <?php foreach(ArrayHelper::merge($model->related, [$model]) as $model): ?>
             <div class="col-md-6">
-                    <h3><?=$model->title_en?> (<?=$model->ndb_slug?>) <a href="<?= Url::to(['/admin/product/delete-from-group', 'id' => $model->id]) ?>"></a></h3>
+                    <h3><?=$model->title_en?> (<?=$model->ndb_slug?>) <a href="<?= Url::to(['/admin/product/delete-from-group', 'id' => $model->id]) ?>">удалить</a></h3>
                     <div style="height: 400px;overflow-y:scroll">
                     <table class="table table-bordered">
                         <?php foreach($model->getNutrients()->orderBy('nutrient_id ASC')->all() as $nutrient) {
