@@ -128,4 +128,20 @@ class ProductController extends AdminController
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+
+    public function afterAction($action, $result)
+    {
+        Yii::$app->getUser()->setReturnUrl(Yii::$app->request->url);
+        return parent::afterAction($action, $result);
+    }
+
+
+    public function actionDeleteFromGroup($id){
+        $model = Product::findOne(['id'=>$id]);
+        $model->related_id = NULL;
+        $model->save();
+
+        return $this->goBack();
+    }
 }

@@ -17,9 +17,7 @@ use yii\widgets\ActiveForm;
 
 $this->title = $group->title;
 
-$array = ArrayHelper::map( ProductGroup::find()->all(), 'id', 'title');
-
-?>
+$array = ArrayHelper::map( ProductGroup::find()->all(), 'id', 'title'); ?>
 
 <div class="admin-index">
 	<div class="row">
