@@ -79,7 +79,7 @@ $array = ArrayHelper::map( ProductGroup::find()->all(), 'id', 'title');
             $query = $group->getProducts()->andFilterWhere(['or','related_id is NULL',['=','related_id',0]]);
             $anotherDataProvider = false;
         } else {
-            $query = $group->getProducts()->where(['like','title_en', $search])->andFilterWhere(['or',['is','related_id',NULL],['=','related_id',0]]);
+            $query = $group->getProducts()->where(['like','title_en', $search])->andFilterWhere(['or','related_id is NULL',['=','related_id',0]]);
 
             $another_query = ProductToGroup::find()->joinWith('product')->where(['like','title_en', $search])->andWhere(['!=','group_id',$group->id])->orderBy('group_id');
 
