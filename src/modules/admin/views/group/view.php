@@ -126,7 +126,7 @@ $array = ArrayHelper::map( ProductGroup::find()->all(), 'id', 'title'); ?>
                                         'class'=>'open_subgrp'
                                 ]).']'.
                                 '<div class="subgrp">'.implode("<br>", array_map(function($item){
-                                    return $item->title_en;
+                                    return $item->title_en." ".$item->ndb_slug;
                                 }, $model->product->related)).'</div>';
                             endif;
                             return '';
