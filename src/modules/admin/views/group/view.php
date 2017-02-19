@@ -127,7 +127,7 @@ $array = ArrayHelper::map( ProductGroup::find()->all(), 'id', 'title'); ?>
                                 ]).']'.
                                 '<div class="subgrp">'.array_map(function($item){
                                     return $item->title_en;
-                                }, $model->related).'</div>';
+                                }, $model->product->related).'</div>';
                             endif;
                             return '';
                         }
