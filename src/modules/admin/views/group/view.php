@@ -122,7 +122,12 @@ $array = ArrayHelper::map( ProductGroup::find()->all(), 'id', 'title'); ?>
                         'value'=>function($model){
                             if($model->product):
                             return is_null($model->product->related_id) ? $model->product->title_en :
-                                $model->product->title_en.' ['.Html::a('группа', Url::to(['/admin/product/group', 'id'=>$model->product->id])).']';
+                                $model->product->title_en.' ['.Html::a('группа', Url::to(['/admin/product/group', 'id'=>$model->product->id]),[
+                                        'class'=>'open_subgrp'
+                                ]).']'.
+                                '<div class="subgrp">'.array_map(function($item){
+                                    return $item->title_en;
+                                }, $model->related).'</div>';
                             endif;
                             return '';
                         }
