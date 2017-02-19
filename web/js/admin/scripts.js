@@ -35,6 +35,11 @@
     setTimeout(function(){
         $('.nav.submenu.collapse').removeClass('collapse')
     }, 100)
+
+    $('.open_subgrp').click(function(e){
+        e.preventDefault();
+        $(this).next().slideToggle(300);
+    })
 })($);
 
 
