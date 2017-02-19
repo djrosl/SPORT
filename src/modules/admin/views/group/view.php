@@ -125,9 +125,9 @@ $array = ArrayHelper::map( ProductGroup::find()->all(), 'id', 'title'); ?>
                                 $model->product->title_en.' ['.Html::a('группа', Url::to(['/admin/product/group', 'id'=>$model->product->id]),[
                                         'class'=>'open_subgrp'
                                 ]).']'.
-                                '<div class="subgrp">'.array_map(function($item){
+                                '<div class="subgrp">'.implode("\n", array_map(function($item){
                                     return $item->title_en;
-                                }, $model->product->related).'</div>';
+                                }, $model->product->related)).'</div>';
                             endif;
                             return '';
                         }
