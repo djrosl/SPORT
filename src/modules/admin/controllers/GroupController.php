@@ -154,6 +154,12 @@ class GroupController extends AdminController
                     $main->product->save();
                     foreach ($items as $item){
                         if($item->product->id !== $main->product->id){
+                            if($item->product->related){
+                                foreach($item->product->related as $it){
+                                    $it->related_id = $main->product->id;
+                                    $it->save();
+                                }
+                            }
                             $item->product->related_id = $main->product->id;
                             $item->product->save();
                         }

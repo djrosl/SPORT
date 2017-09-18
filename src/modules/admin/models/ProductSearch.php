@@ -77,4 +77,43 @@ class ProductSearch extends Product
 
         return $dataProvider;
     }
+
+    public function searchTranslate($params)
+    {
+        $query = Product::find();
+
+        // add conditions that should always apply here
+
+        $query->joinWith('group')->where(['!=', 'product_to_group.group_id', 1])->orderBy('title_en ASC');
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'ndb_id' => $this->ndb_id,
+            'category_id' => $this->category_id,
+            'diet_type_id' => $this->diet_type_id,
+        ]);
+
+        $query->andFilterWhere(['like', 'slug', $this->slug])
+            ->andFilterWhere(['like', 'title_en', $this->title_en])
+            ->andFilterWhere(['like', 'title_ru', $this->title_ru])
+            ->andFilterWhere(['like', 'image', $this->image])
+            ->andFilterWhere(['like', 'description_short', $this->description_short])
+            ->andFilterWhere(['like', 'description_full', $this->description_full]);
+
+
+        return $dataProvider;
+    }
 }

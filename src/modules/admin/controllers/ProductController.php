@@ -2,6 +2,7 @@
 
 namespace app\modules\admin\controllers;
 
+use app\models\ProductNutrient;
 use Yii;
 use app\models\Product;
 use app\modules\admin\models\ProductSearch;
@@ -38,7 +39,22 @@ class ProductController extends AdminController
         $searchModel = new ProductSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        $dataProvider->pagination->pageSize = 100;
+
         return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionTranslation()
+    {
+        $searchModel = new ProductSearch();
+        $dataProvider = $searchModel->searchTranslate(Yii::$app->request->queryParams);
+
+        $dataProvider->pagination->pageSize = 100;
+
+        return $this->render('translation', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -143,5 +159,14 @@ class ProductController extends AdminController
         $model->save();
 
         return $this->goBack();
+    }
+
+    public function actionSaveTranslation(){
+        $id = \Yii::$app->request->post('id');
+        $val = \Yii::$app->request->post('val');
+        $product = Product::findOne(['id'=>$id]);
+        $product->title_ru = $val;
+        $product->save();
+        return $product->title_ru;
     }
 }

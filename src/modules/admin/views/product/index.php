@@ -31,16 +31,39 @@ $this->params['breadcrumbs'][] = $this->title;
             //'category_id',
             //'diet_type_id',
             //'slug',
-             'title_en',
-             'title_ru',
-             'ndb_slug',
             [
+                'label'=>'title_en',
+                'format'=>'html',
+                'value'=>function($model){
+                    if($model):
+                        return is_null($model->related_id) ? $model->title_en :
+                            $model->title_en.' ['.Html::a('группа', \yii\helpers\Url::to(['/admin/product/group', 'id'=>$model->id]),[
+                                'class'=>'open_subgrp'
+                            ]).']'.
+                            '<div class="subgrp">'.implode("<br>", array_map(function($item){
+                                return $item->title_en." ".$item->ndb_slug;
+                            }, $model->related)).'</div>';
+                    endif;
+                    return '';
+                }
+            ],
+
+            [
+                'attribute'=>'title_ru',
+                'format'=>'raw',
+                'value'=>function($model){
+                    return Html::textarea("titles[{$model->id}]", $model->title_ru, ['class'=>'form-control']).Html::button('OK', ['class'=>'saveTranslation btn btn-info','data'=>['id'=>$model->id]]);
+                }
+
+             ],
+             'ndb_slug',
+            /*[
                 'attribute' => 'group',
                 'format' => 'raw',
                 'value' => function ($model) {
                     return Html::a('Группа: '.count($model->related), ['product/group?id='.$model->id]);
                 },
-            ],
+            ],*/
             // 'image',
             // 'description_short:ntext',
             // 'description_full:ntext',
@@ -49,6 +72,12 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
     <?php Pjax::end(); ?>
-
+    <style>
+        .subgrp {
+            display: none;
+            padding-left: 40px;
+            padding-top: 20px;
+        }
+    </style>
 
 </div>

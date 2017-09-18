@@ -64,7 +64,7 @@ $targets = ArrayHelper::map(Muscle::find()->groupBy(['group'])->all(), 'group', 
 
     <?= $form->field($model, 'video')->fileInput(); ?>
 
-    <?= $model->video ? Html::tag('video', '', ['src'=>$model->video, 'width'=>'300']) : ''; ?>
+    <?= $model->video ? Html::tag('video', '', ['src'=>$model->video, 'width'=>'300', "controls"=>"controls"]) : ''; ?>
 
 	<?= $form->field($model, 'target')->widget(Select2::className(), [
 				'data' => $targets,
@@ -79,6 +79,9 @@ $targets = ArrayHelper::map(Muscle::find()->groupBy(['group'])->all(), 'group', 
 						'placeholder' => 'Выбрать',
 						'multiple' => true
 				],
+        'pluginOptions' => [
+            'tokenSeparators' => [', '], //space and comma are the separators
+        ],
 		]) ?>
 	<?= $form->field($model, 'stability')->widget(Select2::className(), [
 				'data' => $muscles,
@@ -105,15 +108,11 @@ $targets = ArrayHelper::map(Muscle::find()->groupBy(['group'])->all(), 'group', 
 				],
 		]) ?>
 
-    <?= $form->field($model, 'plane')->dropDownList([
-        $model::PLANE_HORIZONTAL=>'горизонтальная',
-        $model::PLANE_SAGITAL=>'сагиттальная'
-    ]) ?>
-
     <?= $form->field($model, 'type')->dropDownList([
 				$model::TYPE_BASE=>'Многосуставное',
 				$model::TYPE_ISOLATE=>'Односуставное'
 		]) ?>
+
 
 	<?= $form->field($model, 'capacity')->widget(Select2::className(), [
 			'data' => $model::CAPACITIES,
@@ -122,6 +121,23 @@ $targets = ArrayHelper::map(Muscle::find()->groupBy(['group'])->all(), 'group', 
 					'multiple' => false
 			],
 	]) ?>
+    
+
+    <?= $form->field($model, 'phase')->widget(Select2::className(), [
+        'data' => $model::PHASES,
+        'options' => [
+            'placeholder' => 'Выбрать',
+            'multiple' => false
+        ],
+    ]) ?>
+
+    <?= $form->field($model, 'direction')->widget(Select2::className(), [
+        'data' => $model::DIRECTIONS,
+        'options' => [
+            'placeholder' => 'Выбрать',
+            'multiple' => true
+        ],
+    ]) ?>
 
     <?= $form->field($model, 'head_down')->dropDownList([
 				1=>'да',

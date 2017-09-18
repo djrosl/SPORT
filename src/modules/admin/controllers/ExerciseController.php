@@ -67,7 +67,11 @@ class ExerciseController extends AdminController
     {
         $model = new Exercise();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            if($model->direction){
+                $model->direction = implode(',', $model->direction);
+            }
+            $model->save();
         	$photo = UploadedFile::getInstance($model, 'photo');
 					$video = UploadedFile::getInstance($model, 'video');
 
@@ -102,7 +106,13 @@ class ExerciseController extends AdminController
     {
         $model = $this->findModel($id);
         $vid = $model->video;
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        //var_dump(Yii::$app->request->post());die;
+        $model->direction = explode(',', $model->direction);
+        if ($model->load(Yii::$app->request->post())) {
+            if($model->direction){
+                $model->direction = implode(',', $model->direction);
+            }
+                $model->save();
                     $model->video = $vid;
 					$photo = UploadedFile::getInstance($model, 'photo');
 					$video = UploadedFile::getInstance($model, 'video');
@@ -118,6 +128,7 @@ class ExerciseController extends AdminController
 						$video->saveAs(Yii::getAlias('@webroot').'/files/'.$path);
 						$model->video = '/files/'.$path;
                     }
+
                     $model->save();
 
             return $this->redirect(['view', 'id' => $model->id]);

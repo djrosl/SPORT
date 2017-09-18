@@ -54,6 +54,24 @@ class Exercise extends \yii\db\ActiveRecord
 			"декомпрессионное вертикальное",
 	];
 
+	const DIRECTIONS = [
+	    0=>'На массу',
+        1=>'На рельеф',
+        2=>"скорость",
+        3=>"растяжка",
+        4=>"сила",
+        5=>"выносливость",
+        6=>"ловкость"
+    ];
+
+    const PHASES = [
+        0=>"однофазное",
+        1=>"двухфазное",
+        2=>"трехфазное",
+        3=>"четырехфазное",
+        4=>"пятифазное",
+    ];
+
 	const PLANE_HORIZONTAL = 1;
 	const PLANE_SAGITAL = 2;
 
@@ -93,8 +111,8 @@ class Exercise extends \yii\db\ActiveRecord
     {
         return [
             [['title'], 'required'],
-            [['plane', 'type', 'head_down', 'axis_power', 'trauma', 'ccal', 'capacity'], 'integer'],
-						[['basic', 'stability', 'synergy'], 'safe'],
+            [['plane', 'type', 'head_down', 'axis_power', 'trauma', 'ccal', 'capacity', 'phase'], 'integer'],
+						[['basic', 'stability', 'synergy', 'direction'], 'safe'],
             [['title','title_short','title_en', 'equipment', 'target'], 'string', 'max' => 255],
 						[['photo', 'video'], 'safe'],
         ];
@@ -113,6 +131,7 @@ class Exercise extends \yii\db\ActiveRecord
             'video' => 'Видео',
             'equipment' => 'Оборудование',
             'plane' => 'Ось',
+            'phase' => 'Фазы',
             'type' => 'Тип',
             'head_down' => 'Голова ниже корпуса',
             'axis_power' => 'Осевая нагрузка',

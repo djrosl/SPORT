@@ -39,7 +39,22 @@
     $('.open_subgrp').click(function(e){
         e.preventDefault();
         $(this).next().slideToggle(300);
-    })
+    });
+
+
+    $('.saveTranslation').click(function(e){
+        e.preventDefault();
+        var val = $(this).prev().val();
+        var id = $(this).data('id');
+
+        $.post('/admin/product/save-translation', {
+            val: val,
+            id: id
+        }, function(data){
+            console.log(data)
+        })
+    });
+
 })($);
 
 
@@ -63,5 +78,25 @@ $(document).ready(function() {
         }
 
         lastChecked = this;
+    });
+
+
+    $('body').on('copy', '.select2-search__field', function(e){
+        e.preventDefault();
+        copyToClipboard($(this).parents('.select2-container').prev().val().join(', '));
+    });
+
+    function copyToClipboard(text) {
+        var $temp = $("<input>");
+        $("body").append($temp);
+        $temp.val(text).select();
+        document.execCommand("copy");
+        $temp.remove();
+    }
+
+    $('body').on('paste', '.select2-search__field', function(e){
+        e.preventDefault();
+        var pastedData = e.originalEvent.clipboardData.getData('text');
+        $(this).parents('.select2-container').prev().val(pastedData.split(', ').map(function(v){return parseInt(v);})).trigger('change');
     });
 });

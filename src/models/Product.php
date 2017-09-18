@@ -132,7 +132,7 @@ class Product extends ActiveRecord
 
 	public function getGroup(){
         return $this->hasOne(ProductToGroup::className(),[
-            'group_id'=>'id'
+            'product_id'=>'id'
         ]);
     }
 
