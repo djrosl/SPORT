@@ -22,4 +22,7 @@ return array_merge(require(__DIR__ . '/installed_modules.php'), [
             'menuBuilder' => 'app\\components\\MenuBuilder',
         ],*/
     ],
+   'api' => [
+	   'class' => 'app\modules\api\Module',
+   ],
 ]);
