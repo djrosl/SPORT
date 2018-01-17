@@ -35,3 +35,7 @@ phpunit.phar
 
 # Codeception
 codecept.phar
+
+
+# backup db
+backup/
